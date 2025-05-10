@@ -1,0 +1,228 @@
+/* Soundmaster Admin Dashboard Styles */
+
+:root {
+  --primary-color: #071e24;
+  --accent-color: #15d2ef;
+  --sidebar-width: 250px;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f8f9fa;
+}
+
+/* Sidebar Styles */
+.sidebar {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 100;
+  padding: 0;
+  box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1);
+  background-color: var(--primary-color) !important;
+  width: var(--sidebar-width);
+}
+
+.sidebar .nav-link {
+  color: rgba(255, 255, 255, 0.7);
+  padding: 0.75rem 1.5rem;
+  font-weight: 500;
+  transition: all 0.2s;
+}
+
+.sidebar .nav-link:hover {
+  color: rgba(255, 255, 255, 0.9);
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.sidebar .nav-link.active {
+  color: #fff;
+  background-color: var(--accent-color);
+}
+
+.sidebar .nav-link i {
+  width: 20px;
+  text-align: center;
+}
+
+/* Main Content Styles */
+main {
+  padding-top: 1.5rem;
+}
+
+@media (min-width: 768px) {
+  main {
+    padding-left: calc(var(--sidebar-width) + 1.5rem);
+  }
+}
+
+/* Page Content Styles */
+.page-content {
+  display: none;
+}
+
+.page-content.active {
+  display: block;
+}
+
+/* Card Styles */
+.card {
+  border-radius: 0.5rem;
+  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+  margin-bottom: 1.5rem;
+}
+
+.card-header {
+  background-color: #fff;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+  padding: 1rem;
+}
+
+/* Form Styles */
+.form-control:focus,
+.form-select:focus {
+  border-color: var(--accent-color);
+  box-shadow: 0 0 0 0.25rem rgba(21, 210, 239, 0.25);
+}
+
+/* Button Styles */
+.btn-primary {
+  background-color: var(--accent-color);
+  border-color: var(--accent-color);
+}
+
+.btn-primary:hover,
+.btn-primary:focus {
+  background-color: #12b8d0;
+  border-color: #12b8d0;
+}
+
+/* Table Styles */
+.table thead th {
+  background-color: #f8f9fa;
+  border-bottom: 2px solid #dee2e6;
+  font-weight: 600;
+}
+
+/* Modal Styles */
+.modal-header {
+  background-color: var(--primary-color);
+  color: white;
+}
+
+/* Utilities */
+.cursor-pointer {
+  cursor: pointer;
+}
+
+/* Login Page */
+.login-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background-color: var(--primary-color);
+}
+
+.login-card {
+  width: 100%;
+  max-width: 400px;
+  border-radius: 1rem;
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+}
+
+/* Editor Styles */
+.content-editor {
+  min-height: 300px;
+  border: 1px solid #ced4da;
+  border-radius: 0.25rem;
+  padding: 0.5rem;
+}
+
+/* Schedule Table */
+.schedule-table th,
+.schedule-table td {
+  vertical-align: middle;
+}
+
+.schedule-slot {
+  background-color: #e9ecef;
+  border-radius: 0.25rem;
+  padding: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+/* Playlist Cards */
+.playlist-card {
+  transition: transform 0.2s;
+}
+
+.playlist-card:hover {
+  transform: translateY(-5px);
+}
+
+.playlist-card .card-img-top {
+  height: 180px;
+  object-fit: cover;
+}
+
+/* User Badges */
+.role-badge {
+  font-size: 0.75rem;
+  padding: 0.25rem 0.5rem;
+}
+
+.role-admin {
+  background-color: #dc3545;
+}
+
+.role-editor {
+  background-color: #6c757d;
+}
+
+.role-user {
+  background-color: #28a745;
+}
+
+/* Settings Tabs */
+.settings-tabs .nav-link {
+  color: var(--primary-color);
+  border-radius: 0;
+  padding: 0.75rem 1rem;
+}
+
+.settings-tabs .nav-link.active {
+  color: var(--accent-color);
+  border-bottom: 2px solid var(--accent-color);
+  background-color: transparent;
+}
+
+/* Analytics Charts */
+.chart-container {
+  position: relative;
+  height: 300px;
+  margin-bottom: 1.5rem;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 767.98px) {
+  .sidebar {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: -100%;
+    z-index: 1000;
+    transition: all 0.3s;
+    width: 80%;
+    max-width: var(--sidebar-width);
+  }
+  
+  .sidebar.show {
+    left: 0;
+  }
+  
+  main {
+    padding-left: 1.5rem !important;
+  }
+}

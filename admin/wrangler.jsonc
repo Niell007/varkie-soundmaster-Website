@@ -1,0 +1,47 @@
+// wrangler.jsonc
+{
+  "name": "soundmaster-admin",
+  "main": "src/index.ts",
+  "compatibility_date": "2025-02-11",
+  "compatibility_flags": ["nodejs_compat"],
+  "kv_namespaces": [
+    {
+      "binding": "ADMIN_ASSETS",
+      "id": "0bb6ceac1b77455f8c83af025dfe17cf"
+    }
+  ],
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "soundmaster-users",
+      "database_id": "f2bbcd89-071f-4dae-a3c4-7e7c7dec06ca"
+    }
+  ],
+  "r2_buckets": [
+    {
+      "binding": "MEDIA_BUCKET",
+      "bucket_name": "soundmaster-media",
+      "preview_bucket_name": "soundmaster-media-dev"
+    }
+  ],
+  "vars": {
+    "JWT_SECRET": "change-this-to-a-secure-secret-in-production",
+    "ADMIN_EMAIL": "admin@soundmaster.com"
+  },
+  "triggers": {
+    "crons": ["0 0 * * *"]
+  },
+  "observability": {
+    "enabled": true,
+    "head_sampling_rate": 1
+  },
+  "dev": {
+    "port": 8787,
+    "local_protocol": "http"
+  },
+  "site": {
+    "bucket": "./dist",
+    "include": ["**/*.html", "**/*.js", "**/*.css", "**/*.png", "**/*.jpg", "**/*.svg", "**/*.ico"],
+    "exclude": ["node_modules/**/*"]
+  }
+}

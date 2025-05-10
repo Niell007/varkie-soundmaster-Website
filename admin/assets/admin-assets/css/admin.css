@@ -1,0 +1,284 @@
+/* Soundmaster Admin Dashboard Styles */
+:root {
+  --primary-color: #071e24;
+  --accent-color: #15d2ef;
+  --sidebar-width: 250px;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f8f9fa;
+}
+
+/* Sidebar styles */
+#sidebar {
+  background-color: var(--primary-color) !important;
+  min-height: 100vh;
+  transition: all 0.3s;
+  width: var(--sidebar-width);
+  position: fixed;
+  z-index: 100;
+  left: 0;
+  top: 0;
+}
+
+#sidebar .nav-link {
+  color: rgba(255, 255, 255, 0.75);
+  padding: 0.75rem 1rem;
+  border-radius: 0.25rem;
+  margin-bottom: 0.25rem;
+}
+
+#sidebar .nav-link:hover {
+  color: white;
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+#sidebar .nav-link.active {
+  color: white;
+  background-color: var(--accent-color);
+}
+
+#sidebar .nav-link i {
+  width: 20px;
+  text-align: center;
+}
+
+/* Main content area */
+main {
+  margin-left: var(--sidebar-width);
+  transition: all 0.3s;
+}
+
+/* Page content */
+.page-content {
+  display: none;
+}
+
+.page-content.active {
+  display: block;
+}
+
+/* Card styles */
+.card {
+  border: none;
+  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+  border-radius: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.card-header {
+  background-color: white;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  padding: 1rem;
+}
+
+/* Form styles */
+.form-control:focus, .form-select:focus {
+  border-color: var(--accent-color);
+  box-shadow: 0 0 0 0.25rem rgba(21, 210, 239, 0.25);
+}
+
+/* Button styles */
+.btn-primary {
+  background-color: var(--accent-color);
+  border-color: var(--accent-color);
+}
+
+.btn-primary:hover, .btn-primary:focus {
+  background-color: #12b8d0;
+  border-color: #12b8d0;
+}
+
+/* Table styles */
+.table-hover tbody tr:hover {
+  background-color: rgba(21, 210, 239, 0.05);
+}
+
+/* Responsive adjustments */
+@media (max-width: 767.98px) {
+  #sidebar {
+    margin-left: -var(--sidebar-width);
+  }
+  
+  #sidebar.show {
+    margin-left: 0;
+  }
+  
+  main {
+    margin-left: 0;
+  }
+  
+  main.sidebar-open {
+    margin-left: var(--sidebar-width);
+  }
+}
+
+/* Status badges */
+.status-badge {
+  width: 10px;
+  height: 10px;
+  display: inline-block;
+  border-radius: 50%;
+  margin-right: 5px;
+}
+
+.status-online {
+  background-color: #28a745;
+}
+
+.status-offline {
+  background-color: #dc3545;
+}
+
+/* Custom animations */
+.fade-in {
+  animation: fadeIn 0.3s ease-in;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* Loading spinner */
+.spinner-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(255, 255, 255, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.spinner-container {
+  text-align: center;
+}
+
+.spinner-border {
+  color: var(--accent-color);
+  width: 3rem;
+  height: 3rem;
+}
+
+/* Toast notifications */
+.toast-container {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 1050;
+}
+
+.toast {
+  background-color: white;
+  border-left: 4px solid var(--accent-color);
+}
+
+.toast-success {
+  border-left-color: #28a745;
+}
+
+.toast-error {
+  border-left-color: #dc3545;
+}
+
+.toast-warning {
+  border-left-color: #ffc107;
+}
+
+/* Media player */
+.media-player {
+  border-radius: 0.5rem;
+  overflow: hidden;
+  background-color: var(--primary-color);
+  color: white;
+  padding: 1rem;
+}
+
+.media-controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 1rem;
+}
+
+.media-controls button {
+  background-color: transparent;
+  border: none;
+  color: white;
+  font-size: 1.5rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.media-controls button:hover {
+  color: var(--accent-color);
+}
+
+/* File upload */
+.dropzone {
+  border: 2px dashed #dee2e6;
+  border-radius: 0.5rem;
+  padding: 2rem;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.dropzone:hover {
+  border-color: var(--accent-color);
+}
+
+.dropzone.dragover {
+  border-color: var(--accent-color);
+  background-color: rgba(21, 210, 239, 0.05);
+}
+
+/* Dashboard widgets */
+.widget {
+  background-color: white;
+  border-radius: 0.5rem;
+  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.widget-title {
+  font-size: 1.25rem;
+  margin-bottom: 1rem;
+  color: var(--primary-color);
+}
+
+/* Custom switch */
+.form-switch .form-check-input:checked {
+  background-color: var(--accent-color);
+  border-color: var(--accent-color);
+}
+
+/* Pagination */
+.page-item.active .page-link {
+  background-color: var(--accent-color);
+  border-color: var(--accent-color);
+}
+
+.page-link {
+  color: var(--accent-color);
+}
+
+.page-link:hover {
+  color: #12b8d0;
+}
+
+/* Tooltip */
+.tooltip-inner {
+  background-color: var(--primary-color);
+}
+
+.bs-tooltip-auto[data-popper-placement^=top] .tooltip-arrow::before, 
+.bs-tooltip-top .tooltip-arrow::before {
+  border-top-color: var(--primary-color);
+}

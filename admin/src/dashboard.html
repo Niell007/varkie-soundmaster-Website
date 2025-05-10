@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Soundmaster Admin Dashboard</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  <style>
+    :root {
+      --primary-color: #071e24;
+      --accent-color: #15d2ef;
+      --sidebar-width: 250px;
+    }
+    
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f8f9fa;
+    }
+    
+    /* Sidebar styles */
+    #sidebar {
+      background-color: var(--primary-color);
+      min-height: 100vh;
+      width: var(--sidebar-width);
+      position: fixed;
+      z-index: 100;
+      left: 0;
+      top: 0;
+    }
+    
+    #sidebar .nav-link {
+      color: rgba(255, 255, 255, 0.75);
+      padding: 0.75rem 1rem;
+      border-radius: 0.25rem;
+      margin-bottom: 0.25rem;
+    }
+    
+    #sidebar .nav-link:hover {
+      color: white;
+      background-color: rgba(255, 255, 255, 0.1);
+    }
+    
+    #sidebar .nav-link.active {
+      color: white;
+      background-color: var(--accent-color);
+    }
+    
+    #sidebar .nav-link i {
+      width: 20px;
+      text-align: center;
+    }
+    
+    /* Main content area */
+    main {
+      margin-left: var(--sidebar-width);
+    }
+    
+    /* Page content */
+    .page-content {
+      display: none;
+    }
+    
+    .page-content.active {
+      display: block;
+    }
+    
+    /* Card styles */
+    .card {
+      border: none;
+      box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+      border-radius: 0.5rem;
+      margin-bottom: 1.5rem;
+    }
+    
+    .card-header {
+      background-color: white;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+      padding: 1rem;
+    }
+    
+    /* Responsive adjustments */
+    @media (max-width: 767.98px) {
+      #sidebar {
+        margin-left: -250px;
+      }
+      
+      #sidebar.show {
+        margin-left: 0;
+      }
+      
+      main {
+        margin-left: 0;
+      }
+      
+      main.sidebar-open {
+        margin-left: 250px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container-fluid">
+    <div class="row">
+      <!-- Sidebar -->
+      <nav id="sidebar" class="col-md-3 col-lg-2 d-md-block bg-dark sidebar collapse">
+        <div class="position-sticky pt-3">
+          <div class="text-center mb-4">
+            <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAiIGhlaWdodD0iMTAwIiB2aWV3Qm94PSIwIDAgMTAwIDEwMCI+PHJlY3Qgd2lkdGg9IjEwMCIgaGVpZ2h0PSIxMDAiIGZpbGw9IiMwNzFlMjQiLz48dGV4dCB4PSI1MCIgeT0iNTAiIGZvbnQtc2l6ZT0iMjAiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGFsaWdubWVudC1iYXNlbGluZT0ibWlkZGxlIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZmlsbD0id2hpdGUiPlNNPC90ZXh0Pjwvc3ZnPg==" alt="Soundmaster Logo" class="img-fluid rounded-circle" style="max-width: 100px;">
+            <h5 class="text-white mt-2">Soundmaster Admin</h5>
+          </div>
+          <ul class="nav flex-column">
+            <li class="nav-item">
+              <a class="nav-link active" href="#dashboard">
+                <i class="fas fa-tachometer-alt me-2"></i>
+                Dashboard
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#content">
+                <i class="fas fa-file-alt me-2"></i>
+                Content
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#schedule">
+                <i class="fas fa-calendar-alt me-2"></i>
+                Schedule
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#playlists">
+                <i class="fas fa-music me-2"></i>
+                Playlists
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#users">
+                <i class="fas fa-users me-2"></i>
+                Users
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#settings">
+                <i class="fas fa-cog me-2"></i>
+                Settings
+              </a>
+            </li>
+          </ul>
+          <hr class="text-white-50">
+          <div class="px-3 mt-4">
+            <button id="logoutBtn" class="btn btn-danger w-100">
+              <i class="fas fa-sign-out-alt me-2"></i> Logout
+            </button>
+          </div>
+        </div>
+      </nav>
+
+      <!-- Main content -->
+      <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+        <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+          <h1 id="pageTitle">Dashboard</h1>
+          <div class="btn-toolbar mb-2 mb-md-0">
+            <button type="button" class="btn btn-sm btn-outline-secondary d-md-none" id="sidebarToggle">
+              <i class="fas fa-bars"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- Dashboard Content -->
+        <div class="row row-cols-1 row-cols-md-2 row-cols-xl-4 g-4 mb-4">
+          <div class="col">
+            <div class="card bg-primary text-white h-100">
+              <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center">
+                  <div>
+                    <h6 class="text-white-50">Total Users</h6>
+                    <h3>5</h3>
+                  </div>
+                  <i class="fas fa-users fa-2x text-white-50"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="card bg-success text-white h-100">
+              <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center">
+                  <div>
+                    <h6 class="text-white-50">Total Content</h6>
+                    <h3>12</h3>
+                  </div>
+                  <i class="fas fa-file-alt fa-2x text-white-50"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="card bg-warning text-white h-100">
+              <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center">
+                  <div>
+                    <h6 class="text-white-50">Total Playlists</h6>
+                    <h3>8</h3>
+                  </div>
+                  <i class="fas fa-music fa-2x text-white-50"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="card bg-danger text-white h-100">
+              <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center">
+                  <div>
+                    <h6 class="text-white-50">Total Shows</h6>
+                    <h3>15</h3>
+                  </div>
+                  <i class="fas fa-broadcast-tower fa-2x text-white-50"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6 mb-4">
+            <div class="card h-100">
+              <div class="card-header">
+                <h5 class="card-title mb-0">Recent Activity</h5>
+              </div>
+              <div class="card-body">
+                <ul class="list-group list-group-flush">
+                  <li class="list-group-item">
+                    <div class="d-flex justify-content-between align-items-center">
+                      <div>
+                        <strong>Admin</strong> updated site settings
+                        <div><small class="text-muted">May 10, 2025, 2:30 AM</small></div>
+                      </div>
+                      <span class="badge bg-warning rounded-pill">update</span>
+                    </div>
+                  </li>
+                  <li class="list-group-item">
+                    <div class="d-flex justify-content-between align-items-center">
+                      <div>
+                        <strong>Admin</strong> created new playlist
+                        <div><small class="text-muted">May 9, 2025, 11:15 PM</small></div>
+                      </div>
+                      <span class="badge bg-success rounded-pill">create</span>
+                    </div>
+                  </li>
+                  <li class="list-group-item">
+                    <div class="d-flex justify-content-between align-items-center">
+                      <div>
+                        <strong>Editor</strong> updated schedule
+                        <div><small class="text-muted">May 9, 2025, 8:45 PM</small></div>
+                      </div>
+                      <span class="badge bg-warning rounded-pill">update</span>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 mb-4">
+            <div class="card h-100">
+              <div class="card-header">
+                <h5 class="card-title mb-0">Current Stream Status</h5>
+              </div>
+              <div class="card-body">
+                <div>
+                  <div class="d-flex align-items-center mb-3">
+                    <div class="me-3">
+                      <span class="badge bg-success">Online</span>
+                    </div>
+                    <div>
+                      <h6 class="mb-0">Evening Jazz</h6>
+                      <small class="text-muted">DJ Smooth</small>
+                    </div>
+                  </div>
+                  <div class="mb-3">
+                    <label class="form-label">Stream URL</label>
+                    <div class="input-group">
+                      <input type="text" class="form-control" value="https://stream.soundmaster.com/listen" readonly>
+                      <button class="btn btn-outline-secondary" type="button">
+                        <i class="fas fa-copy"></i>
+                      </button>
+                    </div>
+                  </div>
+                  <div class="d-grid gap-2">
+                    <button class="btn btn-primary" id="testStreamBtn">
+                      <i class="fas fa-play me-2"></i> Test Stream
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Check authentication
+      var token = localStorage.getItem('authToken');
+      if (!token) {
+        window.location.href = '/admin/login';
+        return;
+      }
+      
+      // Setup navigation
+      var navLinks = document.querySelectorAll('#sidebar .nav-link');
+      navLinks.forEach(function(link) {
+        link.addEventListener('click', function(e) {
+          e.preventDefault();
+          
+          // Update active link
+          navLinks.forEach(function(l) { 
+            l.classList.remove('active');
+          });
+          this.classList.add('active');
+          
+          // Update page title
+          document.getElementById('pageTitle').textContent = this.textContent.trim();
+        });
+      });
+      
+      // Setup mobile sidebar toggle
+      var sidebarToggle = document.getElementById('sidebarToggle');
+      var sidebar = document.getElementById('sidebar');
+      var main = document.querySelector('main');
+      
+      if (sidebarToggle) {
+        sidebarToggle.addEventListener('click', function() {
+          sidebar.classList.toggle('show');
+          main.classList.toggle('sidebar-open');
+        });
+      }
+      
+      // Setup logout
+      var logoutBtn = document.getElementById('logoutBtn');
+      if (logoutBtn) {
+        logoutBtn.addEventListener('click', function() {
+          localStorage.removeItem('authToken');
+          window.location.href = '/admin/login';
+        });
+      }
+      
+      // Setup test stream button
+      var testStreamBtn = document.getElementById('testStreamBtn');
+      if (testStreamBtn) {
+        testStreamBtn.addEventListener('click', function() {
+          var icon = testStreamBtn.querySelector('i');
+          var isPlaying = icon.classList.contains('fa-stop');
+          
+          if (isPlaying) {
+            icon.classList.replace('fa-stop', 'fa-play');
+            testStreamBtn.innerHTML = '<i class="fas fa-play me-2"></i> Test Stream';
+            alert('Stream test stopped');
+          } else {
+            icon.classList.replace('fa-play', 'fa-stop');
+            testStreamBtn.innerHTML = '<i class="fas fa-stop me-2"></i> Stop Stream';
+            alert('Stream test started');
+          }
+        });
+      }
+    });
+  </script>
+</body>
+</html>

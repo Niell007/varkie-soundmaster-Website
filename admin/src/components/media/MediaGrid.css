@@ -1,0 +1,154 @@
+.media-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 16px;
+}
+
+.media-grid-item {
+  background-color: #fff;
+  border-radius: 6px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  transition: transform 0.2s, box-shadow 0.2s;
+  cursor: pointer;
+  position: relative;
+}
+
+.media-grid-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.media-grid-item.selected {
+  border: 2px solid #0070f3;
+}
+
+.media-preview {
+  height: 160px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f5f7fa;
+  overflow: hidden;
+}
+
+.media-preview-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.media-preview-audio {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 10px;
+}
+
+.audio-icon {
+  font-size: 32px;
+  margin-bottom: 8px;
+}
+
+.audio-title {
+  font-size: 14px;
+  text-align: center;
+  margin-bottom: 8px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 100%;
+}
+
+.media-preview-audio audio {
+  width: 100%;
+  height: 40px;
+}
+
+.media-preview-document {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 10px;
+}
+
+.document-icon {
+  font-size: 48px;
+  margin-bottom: 8px;
+}
+
+.document-title {
+  font-size: 14px;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 100%;
+}
+
+.media-info {
+  padding: 12px;
+}
+
+.media-title {
+  margin: 0 0 8px 0;
+  font-size: 16px;
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.media-meta {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  color: #666;
+  margin-bottom: 4px;
+}
+
+.media-type {
+  text-transform: capitalize;
+  background-color: #f0f0f0;
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+.media-date {
+  font-size: 12px;
+  color: #888;
+}
+
+.media-actions {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.media-grid-item:hover .media-actions {
+  opacity: 1;
+}
+
+.media-delete-button {
+  background-color: rgba(255, 255, 255, 0.9);
+  border: none;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+.media-delete-button:hover {
+  background-color: #ff4d4f;
+  color: white;
+}

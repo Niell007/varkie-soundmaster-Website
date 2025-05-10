@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Soundmaster Admin - Login</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  <style>
+    :root {
+      --primary-color: #071e24;
+      --accent-color: #15d2ef;
+    }
+    
+    body {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      background-color: var(--primary-color);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    
+    .login-container {
+      width: 100%;
+      max-width: 400px;
+      padding: 15px;
+      margin: auto;
+    }
+    
+    .login-card {
+      background-color: #fff;
+      border-radius: 1rem;
+      box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+      overflow: hidden;
+    }
+    
+    .login-header {
+      background-color: var(--primary-color);
+      color: white;
+      padding: 1.5rem;
+      text-align: center;
+    }
+    
+    .login-header img {
+      max-width: 100px;
+      border-radius: 50%;
+      margin-bottom: 1rem;
+    }
+    
+    .login-body {
+      padding: 2rem;
+    }
+    
+    .form-control:focus {
+      border-color: var(--accent-color);
+      box-shadow: 0 0 0 0.25rem rgba(21, 210, 239, 0.25);
+    }
+    
+    .btn-primary {
+      background-color: var(--accent-color);
+      border-color: var(--accent-color);
+    }
+    
+    .btn-primary:hover,
+    .btn-primary:focus {
+      background-color: #12b8d0;
+      border-color: #12b8d0;
+    }
+  </style>
+</head>
+<body>
+  <div class="login-container">
+    <div class="login-card">
+      <div class="login-header">
+        <img src="/images/logo.jpg" alt="Soundmaster Logo" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAiIGhlaWdodD0iMTAwIiB2aWV3Qm94PSIwIDAgMTAwIDEwMCI+PHJlY3Qgd2lkdGg9IjEwMCIgaGVpZ2h0PSIxMDAiIGZpbGw9IiMwNzFlMjQiLz48dGV4dCB4PSI1MCIgeT0iNTAiIGZvbnQtc2l6ZT0iMjAiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGFsaWdubWVudC1iYXNlbGluZT0ibWlkZGxlIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZmlsbD0id2hpdGUiPlNNPC90ZXh0Pjwvc3ZnPg=='">
+        <h4>Soundmaster Admin</h4>
+        <p class="mb-0">Login to access dashboard</p>
+      </div>
+      <div class="login-body">
+        <form id="loginForm">
+          <div class="mb-3">
+            <label for="email" class="form-label">Email address</label>
+            <div class="input-group">
+              <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+              <input type="email" class="form-control" id="email" name="email" required>
+            </div>
+          </div>
+          <div class="mb-3">
+            <label for="password" class="form-label">Password</label>
+            <div class="input-group">
+              <span class="input-group-text"><i class="fas fa-lock"></i></span>
+              <input type="password" class="form-control" id="password" name="password" required>
+              <button class="btn btn-outline-secondary" type="button" id="togglePassword">
+                <i class="fas fa-eye"></i>
+              </button>
+            </div>
+          </div>
+          <div class="d-grid gap-2 mt-4">
+            <button type="submit" class="btn btn-primary" id="loginButton">
+              <i class="fas fa-sign-in-alt me-2"></i> Login
+            </button>
+          </div>
+          <div class="alert alert-danger mt-3 d-none" id="loginError"></div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Toggle password visibility
+      const togglePassword = document.getElementById('togglePassword');
+      const passwordInput = document.getElementById('password');
+      
+      togglePassword.addEventListener('click', () => {
+        const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+        passwordInput.setAttribute('type', type);
+        togglePassword.innerHTML = type === 'password' ? '<i class="fas fa-eye"></i>' : '<i class="fas fa-eye-slash"></i>';
+      });
+      
+      // Handle login form submission
+      const loginForm = document.getElementById('loginForm');
+      const loginButton = document.getElementById('loginButton');
+      const loginError = document.getElementById('loginError');
+      
+      loginForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        
+        // Reset error message
+        loginError.classList.add('d-none');
+        
+        // Disable form
+        loginButton.disabled = true;
+        loginButton.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Logging in...';
+        
+        // Get form data
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+        
+        try {
+          // Send login request
+          const response = await fetch('/api/auth/login', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ email, password })
+          });
+          
+          const data = await response.json();
+          
+          if (!response.ok) {
+            throw new Error(data.error || 'Login failed');
+          }
+          
+          // Store token in localStorage
+          localStorage.setItem('authToken', data.token);
+          
+          // Redirect to admin dashboard
+          window.location.href = '/admin';
+        } catch (error) {
+          // Show error message
+          loginError.textContent = error.message;
+          loginError.classList.remove('d-none');
+          
+          // Re-enable form
+          loginButton.disabled = false;
+          loginButton.innerHTML = '<i class="fas fa-sign-in-alt me-2"></i> Login';
+        }
+      });
+    });
+  </script>
+</body>
+</html>

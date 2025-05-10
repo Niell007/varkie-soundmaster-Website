@@ -1,0 +1,62 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Dependencies
+node_modules
+.pnp
+.pnp.js
+
+# Build outputs
+dist
+dist-ssr
+*.local
+
+# Cloudflare Workers specific
+.wrangler
+.dev.vars
+.env
+.env.*
+!.env.example
+worker
+.cloudflare/
+
+# R2 storage local files
+.r2/
+
+# D1 Database files
+.d1/
+
+# Miniflare cache
+.mf/
+
+# Wrangler toml backup files
+wrangler.toml.bak
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# TypeScript
+*.tsbuildinfo
+next-env.d.ts
+
+# Generated files
+public/build/
+public/dist/
+.cache/

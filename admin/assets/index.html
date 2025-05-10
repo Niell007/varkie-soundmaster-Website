@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Soundmaster Admin Dashboard</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  <link rel="stylesheet" href="/admin-assets/css/admin.css">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</head>
+<body>
+  <div class="container-fluid">
+    <div class="row">
+      <!-- Sidebar -->
+      <nav id="sidebar" class="col-md-3 col-lg-2 d-md-block bg-dark sidebar collapse">
+        <div class="position-sticky pt-3">
+          <div class="text-center mb-4">
+            <img src="/images/logo.jpg" alt="Soundmaster Logo" class="img-fluid rounded-circle" style="max-width: 100px;">
+            <h5 class="text-white mt-2">Soundmaster Admin</h5>
+          </div>
+          <ul class="nav flex-column">
+            <li class="nav-item">
+              <a class="nav-link active" href="#dashboard" data-page="dashboard">
+                <i class="fas fa-tachometer-alt me-2"></i>
+                Dashboard
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#content" data-page="content">
+                <i class="fas fa-file-alt me-2"></i>
+                Content
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#schedule" data-page="schedule">
+                <i class="fas fa-calendar-alt me-2"></i>
+                Schedule
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#playlists" data-page="playlists">
+                <i class="fas fa-music me-2"></i>
+                Playlists
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#users" data-page="users">
+                <i class="fas fa-users me-2"></i>
+                Users
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#settings" data-page="settings">
+                <i class="fas fa-cog me-2"></i>
+                Settings
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#analytics" data-page="analytics">
+                <i class="fas fa-chart-bar me-2"></i>
+                Analytics
+              </a>
+            </li>
+          </ul>
+          <hr class="text-white-50">
+          <div class="px-3 mt-4">
+            <button id="logoutBtn" class="btn btn-danger w-100">
+              <i class="fas fa-sign-out-alt me-2"></i> Logout
+            </button>
+          </div>
+        </div>
+      </nav>
+
+      <!-- Main content -->
+      <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+        <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+          <h1 id="pageTitle">Dashboard</h1>
+          <div class="btn-toolbar mb-2 mb-md-0">
+            <div class="btn-group me-2" id="actionButtons">
+              <!-- Dynamic action buttons will be added here -->
+            </div>
+            <button type="button" class="btn btn-sm btn-outline-secondary d-md-none" id="sidebarToggle">
+              <i class="fas fa-bars"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- Page content will be loaded here -->
+        <div id="pageContent">
+          <!-- Dashboard page (default) -->
+          <div id="dashboard-page" class="page-content active">
+            <div class="row row-cols-1 row-cols-md-2 row-cols-xl-4 g-4 mb-4">
+              <div class="col">
+                <div class="card bg-primary text-white h-100">
+                  <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                      <div>
+                        <h6 class="text-white-50">Total Users</h6>
+                        <h3 id="totalUsers">0</h3>
+                      </div>
+                      <i class="fas fa-users fa-2x text-white-50"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col">
+                <div class="card bg-success text-white h-100">
+                  <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                      <div>
+                        <h6 class="text-white-50">Total Content</h6>
+                        <h3 id="totalContent">0</h3>
+                      </div>
+                      <i class="fas fa-file-alt fa-2x text-white-50"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col">
+                <div class="card bg-warning text-white h-100">
+                  <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                      <div>
+                        <h6 class="text-white-50">Total Playlists</h6>
+                        <h3 id="totalPlaylists">0</h3>
+                      </div>
+                      <i class="fas fa-music fa-2x text-white-50"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col">
+                <div class="card bg-danger text-white h-100">
+                  <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                      <div>
+                        <h6 class="text-white-50">Total Shows</h6>
+                        <h3 id="totalShows">0</h3>
+                      </div>
+                      <i class="fas fa-broadcast-tower fa-2x text-white-50"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6 mb-4">
+                <div class="card h-100">
+                  <div class="card-header">
+                    <h5 class="card-title mb-0">Recent Activity</h5>
+                  </div>
+                  <div class="card-body">
+                    <ul class="list-group list-group-flush" id="recentActivity">
+                      <li class="list-group-item text-center">Loading activity...</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6 mb-4">
+                <div class="card h-100">
+                  <div class="card-header">
+                    <h5 class="card-title mb-0">Current Stream Status</h5>
+                  </div>
+                  <div class="card-body">
+                    <div id="streamStatus">
+                      <div class="d-flex align-items-center mb-3">
+                        <div class="me-3">
+                          <span class="badge bg-success" id="streamStatusBadge">Online</span>
+                        </div>
+                        <div>
+                          <h6 class="mb-0" id="currentShow">Loading...</h6>
+                          <small class="text-muted" id="currentDJ">Loading...</small>
+                        </div>
+                      </div>
+                      <div class="mb-3">
+                        <label class="form-label">Stream URL</label>
+                        <div class="input-group">
+                          <input type="text" class="form-control" id="streamUrl" readonly>
+                          <button class="btn btn-outline-secondary" type="button" id="copyStreamUrl">
+                            <i class="fas fa-copy"></i>
+                          </button>
+                        </div>
+                      </div>
+                      <div class="d-grid gap-2">
+                        <button class="btn btn-primary" id="toggleStreamBtn">
+                          <i class="fas fa-play me-2"></i> Test Stream
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Other page content will be loaded dynamically -->
+          <div id="content-page" class="page-content">
+            <!-- Content management page -->
+          </div>
+          <div id="schedule-page" class="page-content">
+            <!-- Schedule management page -->
+          </div>
+          <div id="playlists-page" class="page-content">
+            <!-- Playlists management page -->
+          </div>
+          <div id="users-page" class="page-content">
+            <!-- Users management page -->
+          </div>
+          <div id="settings-page" class="page-content">
+            <!-- Settings page -->
+          </div>
+          <div id="analytics-page" class="page-content">
+            <!-- Analytics page -->
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <!-- Modals -->
+  <!-- Login Modal -->
+  <div class="modal fade" id="loginModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="loginModalLabel">Login to Admin Dashboard</h5>
+        </div>
+        <div class="modal-body">
+          <form id="loginForm">
+            <div class="mb-3">
+              <label for="loginEmail" class="form-label">Email address</label>
+              <input type="email" class="form-control" id="loginEmail" required>
+            </div>
+            <div class="mb-3">
+              <label for="loginPassword" class="form-label">Password</label>
+              <input type="password" class="form-control" id="loginPassword" required>
+            </div>
+            <div class="alert alert-danger d-none" id="loginError"></div>
+            <div class="d-grid gap-2">
+              <button type="submit" class="btn btn-primary">Login</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Generic Form Modal -->
+  <div class="modal fade" id="formModal" tabindex="-1" aria-labelledby="formModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="formModalLabel">Form</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body" id="formModalBody">
+          <!-- Dynamic form will be inserted here -->
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-primary" id="formSubmitBtn">Save</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Confirmation Modal -->
+  <div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="confirmModalLabel">Confirm Action</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body" id="confirmModalBody">
+          Are you sure you want to proceed with this action?
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-danger" id="confirmBtn">Confirm</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/marked@9.1.5/marked.min.js"></script>
+  <script src="/admin-assets/js/auth.js"></script>
+  <script src="/admin-assets/js/admin.js"></script>
+</body>
+</html>

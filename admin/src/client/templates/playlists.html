@@ -1,0 +1,116 @@
+<!-- Playlist Management Section -->
+<div class="content-section">
+  <div class="section-header">
+    <h2><i class="fas fa-music"></i> Playlist Management</h2>
+    <p>Create and manage playlists for your radio station</p>
+  </div>
+
+  <div class="section-actions">
+    <button id="new-playlist-btn" class="btn btn-primary">
+      <i class="fas fa-plus"></i> Create Playlist
+    </button>
+  </div>
+
+  <div class="section-content">
+    <div id="playlists-container" class="mt-4">
+      <!-- Playlists will be rendered here -->
+    </div>
+  </div>
+
+  <!-- Playlist Modal -->
+  <div class="modal fade" id="playlist-modal" tabindex="-1" aria-labelledby="playlistModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="playlistModalLabel">Create New Playlist</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-playlist-modal"></button>
+        </div>
+        <div class="modal-body">
+          <form id="playlist-form">
+            <div class="mb-3">
+              <label for="playlist-title" class="form-label">Title</label>
+              <input type="text" class="form-control" id="playlist-title" required>
+            </div>
+            <div class="mb-3">
+              <label for="playlist-description" class="form-label">Description</label>
+              <textarea class="form-control" id="playlist-description" rows="3" required></textarea>
+            </div>
+            <div class="mb-3">
+              <label for="playlist-cover" class="form-label">Cover Image</label>
+              <div class="input-group">
+                <input type="text" class="form-control" id="playlist-cover" placeholder="Image URL or media ID">
+                <button class="btn btn-outline-secondary" type="button" id="select-cover">Browse</button>
+              </div>
+              <small class="form-text text-muted">Select an image from your media library or enter a URL</small>
+            </div>
+            <div class="form-check mb-3">
+              <input class="form-check-input" type="checkbox" id="playlist-featured">
+              <label class="form-check-label" for="playlist-featured">
+                Featured Playlist
+              </label>
+              <small class="form-text text-muted d-block">Featured playlists appear prominently on the website</small>
+            </div>
+
+            <div class="tracks-section mt-4">
+              <div class="d-flex justify-content-between align-items-center mb-3">
+                <h5><i class="fas fa-list"></i> Tracks</h5>
+                <button type="button" class="btn btn-sm btn-primary" id="add-track">
+                  <i class="fas fa-plus"></i> Add Track
+                </button>
+              </div>
+              
+              <div id="tracks-container">
+                <!-- Tracks will be rendered here -->
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+          <button type="submit" class="btn btn-primary" form="playlist-form" id="save-playlist">Save Playlist</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Track Modal -->
+  <div class="modal fade" id="track-modal" tabindex="-1" aria-labelledby="trackModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="trackModalLabel">Add New Track</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-track-modal"></button>
+        </div>
+        <div class="modal-body">
+          <form id="track-form">
+            <div class="mb-3">
+              <label for="track-title" class="form-label">Title</label>
+              <input type="text" class="form-control" id="track-title" required>
+            </div>
+            <div class="mb-3">
+              <label for="track-artist" class="form-label">Artist</label>
+              <input type="text" class="form-control" id="track-artist" required>
+            </div>
+            <div class="mb-3">
+              <label for="track-duration" class="form-label">Duration (MM:SS)</label>
+              <input type="text" class="form-control" id="track-duration" placeholder="03:45" pattern="[0-5][0-9]:[0-5][0-9]" required>
+              <small class="form-text text-muted">Format: MM:SS (e.g., 03:45)</small>
+            </div>
+            <div class="mb-3">
+              <label for="track-media" class="form-label">Media File (Optional)</label>
+              <div class="input-group">
+                <input type="text" class="form-control" id="track-media" placeholder="Media ID">
+                <button class="btn btn-outline-secondary" type="button" id="select-media">Browse</button>
+              </div>
+              <small class="form-text text-muted">Select an audio file from your media library</small>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+          <button type="submit" class="btn btn-primary" form="track-form" id="save-track">Add Track</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

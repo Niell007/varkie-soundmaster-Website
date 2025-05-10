@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Media Library - Soundmaster Admin</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Admin Dashboard CSS -->
+  <link rel="stylesheet" href="../css/admin.css">
+</head>
+<body>
+  <div class="wrapper">
+    <!-- Sidebar -->
+    <nav id="sidebar">
+      <div class="sidebar-header">
+        <h3>Soundmaster</h3>
+        <p>Admin Dashboard</p>
+      </div>
+
+      <ul class="list-unstyled components">
+        <li>
+          <a href="../index.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+        </li>
+        <li>
+          <a href="#pageSubmenu" data-bs-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+            <i class="fas fa-file-alt"></i> Pages
+          </a>
+          <ul class="collapse list-unstyled" id="pageSubmenu">
+            <li><a href="home.html">Home</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="contacts.html">Contacts</a></li>
+          </ul>
+        </li>
+        <li>
+          <a href="news.html"><i class="fas fa-newspaper"></i> News</a>
+        </li>
+        <li>
+          <a href="on-demand.html"><i class="fas fa-play-circle"></i> On-Demand</a>
+        </li>
+        <li>
+          <a href="team.html"><i class="fas fa-users"></i> Team</a>
+        </li>
+        <li>
+          <a href="schedule.html"><i class="fas fa-calendar-alt"></i> Schedule</a>
+        </li>
+        <li>
+          <a href="playlists.html"><i class="fas fa-music"></i> Playlists</a>
+        </li>
+        <li class="active">
+          <a href="media-library.html"><i class="fas fa-images"></i> Media Library</a>
+        </li>
+        <li>
+          <a href="#settingsSubmenu" data-bs-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+            <i class="fas fa-cog"></i> Settings
+          </a>
+          <ul class="collapse list-unstyled" id="settingsSubmenu">
+            <li><a href="../settings/general.html">General</a></li>
+            <li><a href="../settings/api-keys.html">API Keys</a></li>
+            <li><a href="../settings/users.html">Users</a></li>
+          </ul>
+        </li>
+      </ul>
+    </nav>
+
+    <!-- Page Content -->
+    <div id="content">
+      <!-- Top Navigation -->
+      <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+          <button type="button" id="sidebarCollapse" class="btn btn-info">
+            <i class="fas fa-bars"></i>
+          </button>
+          <div class="ms-auto">
+            <div class="dropdown">
+              <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="fas fa-user"></i> Admin
+              </button>
+              <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                <li><a class="dropdown-item" href="../settings/profile.html">Profile</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" href="#" id="logoutBtn">Logout</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </nav>
+
+      <!-- Media Library Content -->
+      <div class="container-fluid">
+        <!-- Media Library List View -->
+        <div id="mediaList">
+          <div class="d-flex justify-content-between align-items-center mb-4">
+            <h1>Media Library</h1>
+            <button id="uploadMediaBtn" class="btn btn-primary">
+              <i class="fas fa-upload"></i> Upload Media
+            </button>
+          </div>
+
+          <!-- Search and Filter -->
+          <div class="card shadow mb-4">
+            <div class="card-header py-3">
+              <h6 class="m-0 font-weight-bold text-primary">Search & Filter</h6>
+            </div>
+            <div class="card-body">
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="input-group">
+                    <input type="text" id="searchInput" class="form-control" placeholder="Search media...">
+                    <button class="btn btn-primary" id="searchBtn">
+                      <i class="fas fa-search"></i>
+                    </button>
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <select id="typeFilter" class="form-select">
+                    <option value="all">All Types</option>
+                    <option value="image">Images</option>
+                    <option value="audio">Audio</option>
+                    <option value="video">Video</option>
+                    <option value="document">Documents</option>
+                  </select>
+                </div>
+                <div class="col-md-3">
+                  <select id="visibilityFilter" class="form-select">
+                    <option value="all">All Visibility</option>
+                    <option value="public">Public</option>
+                    <option value="private">Private</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Media Grid -->
+          <div class="card shadow mb-4">
+            <div class="card-body">
+              <div id="mediaGrid" class="media-grid">
+                <div class="text-center py-5">
+                  <div class="spinner-border text-primary" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Pagination -->
+              <div id="mediaPagination" class="d-flex justify-content-between align-items-center mt-4">
+                <div>
+                  <span id="mediaCount">0</span> media items
+                </div>
+                <nav aria-label="Page navigation">
+                  <ul class="pagination">
+                    <li class="page-item disabled">
+                      <a class="page-link" href="#" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                      </a>
+                    </li>
+                    <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item disabled">
+                      <a class="page-link" href="#" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                      </a>
+                    </li>
+                  </ul>
+                </nav>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Media Detail View -->
+        <div id="mediaDetail" style="display: none;">
+          <div class="d-flex justify-content-between align-items-center mb-4">
+            <h1 id="mediaDetailTitle">Media Details</h1>
+            <button id="backToMediaListBtn" class="btn btn-secondary">
+              <i class="fas fa-arrow-left"></i> Back to Library
+            </button>
+          </div>
+
+          <div class="row">
+            <div class="col-md-6">
+              <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                  <h6 class="m-0 font-weight-bold text-primary">Preview</h6>
+                </div>
+                <div class="card-body text-center">
+                  <div id="mediaPreview" class="mb-3">
+                    <!-- Media preview will be inserted here -->
+                  </div>
+                  <div id="mediaActions" class="d-flex justify-content-center gap-2">
+                    <button id="downloadMediaBtn" class="btn btn-info">
+                      <i class="fas fa-download"></i> Download
+                    </button>
+                    <button id="copyUrlBtn" class="btn btn-secondary">
+                      <i class="fas fa-link"></i> Copy URL
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                  <h6 class="m-0 font-weight-bold text-primary">Information</h6>
+                </div>
+                <div class="card-body">
+                  <form id="mediaForm">
+                    <input type="hidden" id="mediaId">
+                    
+                    <div class="mb-3">
+                      <label for="mediaTitle" class="form-label">Title</label>
+                      <input type="text" class="form-control" id="mediaTitle">
+                    </div>
+                    
+                    <div class="mb-3">
+                      <label for="mediaDescription" class="form-label">Description</label>
+                      <textarea class="form-control" id="mediaDescription" rows="3"></textarea>
+                    </div>
+                    
+                    <div class="mb-3">
+                      <label for="mediaAltText" class="form-label">Alt Text</label>
+                      <input type="text" class="form-control" id="mediaAltText">
+                      <small class="text-muted">Alternative text for accessibility (for images)</small>
+                    </div>
+                    
+                    <div class="mb-3">
+                      <div class="form-check form-switch">
+                        <input class="form-check-input" type="checkbox" id="mediaIsPublic">
+                        <label class="form-check-label" for="mediaIsPublic">Public</label>
+                      </div>
+                      <small class="text-muted">Make this media available on the public site</small>
+                    </div>
+                    
+                    <div class="mb-3">
+                      <label class="form-label">File Information</label>
+                      <ul class="list-group">
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                          Filename
+                          <span id="mediaFilename" class="badge bg-primary rounded-pill">filename.jpg</span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                          Type
+                          <span id="mediaType" class="badge bg-info rounded-pill">image/jpeg</span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                          Size
+                          <span id="mediaSize" class="badge bg-secondary rounded-pill">1.2 MB</span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                          Uploaded
+                          <span id="mediaUploaded" class="badge bg-light text-dark rounded-pill">2023-01-01</span>
+                        </li>
+                      </ul>
+                    </div>
+                    
+                    <div class="d-flex justify-content-between">
+                      <button type="button" id="deleteMediaBtn" class="btn btn-danger">
+                        <i class="fas fa-trash"></i> Delete
+                      </button>
+                      <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-save"></i> Save Changes
+                      </button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Media Upload View -->
+        <div id="mediaUpload" style="display: none;">
+          <div class="d-flex justify-content-between align-items-center mb-4">
+            <h1>Upload Media</h1>
+            <button id="backToMediaListFromUploadBtn" class="btn btn-secondary">
+              <i class="fas fa-arrow-left"></i> Back to Library
+            </button>
+          </div>
+
+          <div class="card shadow mb-4">
+            <div class="card-body">
+              <form id="uploadForm">
+                <div class="mb-4">
+                  <div id="dropZone" class="upload-zone">
+                    <i class="fas fa-cloud-upload-alt"></i>
+                    <h4>Drag & Drop Files Here</h4>
+                    <p>or</p>
+                    <button type="button" id="browseFilesBtn" class="btn btn-primary">Browse Files</button>
+                    <input type="file" id="fileInput" multiple style="display: none;">
+                  </div>
+                </div>
+                
+                <div id="uploadPreview" class="mb-4" style="display: none;">
+                  <h5>Files to Upload</h5>
+                  <div id="fileList" class="list-group">
+                    <!-- File list will be inserted here -->
+                  </div>
+                </div>
+                
+                <div class="mb-3">
+                  <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" id="uploadIsPublic" checked>
+                    <label class="form-check-label" for="uploadIsPublic">Make files public</label>
+                  </div>
+                </div>
+                
+                <div class="d-flex justify-content-end">
+                  <button type="button" id="clearFilesBtn" class="btn btn-secondary me-2" style="display: none;">
+                    <i class="fas fa-times"></i> Clear Files
+                  </button>
+                  <button type="submit" id="startUploadBtn" class="btn btn-primary" disabled>
+                    <i class="fas fa-upload"></i> Start Upload
+                  </button>
+                </div>
+              </form>
+              
+              <div id="uploadProgress" class="mt-4" style="display: none;">
+                <h5>Upload Progress</h5>
+                <div id="progressBars">
+                  <!-- Progress bars will be inserted here -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap JS Bundle with Popper -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- Admin Dashboard JS -->
+  <script src="../js/admin.js"></script>
+  <script src="../js/media-library.js"></script>
+</body>
+</html>

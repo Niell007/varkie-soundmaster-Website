@@ -1,0 +1,9 @@
+# Redirect default Netlify subdomain to primary domain
+https://varkie-soundmaster-public.pages.dev/* https://soundmaster.com/:splat 301!
+
+# Handle 404 errors with a custom page
+/* /index.html 200
+
+# Redirect old URLs to new ones
+/about.html /team.html 301
+/contact.html /contacts.html 301

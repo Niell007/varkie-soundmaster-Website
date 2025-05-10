@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Soundmaster Admin Dashboard</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Admin Dashboard CSS -->
+  <link rel="stylesheet" href="css/admin.css">
+</head>
+<body>
+  <div class="wrapper">
+    <!-- Sidebar -->
+    <nav id="sidebar">
+      <div class="sidebar-header">
+        <h3>Soundmaster</h3>
+        <p>Admin Dashboard</p>
+      </div>
+
+      <ul class="list-unstyled components">
+        <li class="active">
+          <a href="index.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+        </li>
+        <li>
+          <a href="#pageSubmenu" data-bs-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+            <i class="fas fa-file-alt"></i> Pages
+          </a>
+          <ul class="collapse list-unstyled" id="pageSubmenu">
+            <li><a href="pages/home.html">Home</a></li>
+            <li><a href="pages/about.html">About</a></li>
+            <li><a href="pages/contacts.html">Contacts</a></li>
+          </ul>
+        </li>
+        <li>
+          <a href="pages/news.html"><i class="fas fa-newspaper"></i> News</a>
+        </li>
+        <li>
+          <a href="pages/on-demand.html"><i class="fas fa-play-circle"></i> On-Demand</a>
+        </li>
+        <li>
+          <a href="pages/team.html"><i class="fas fa-users"></i> Team</a>
+        </li>
+        <li>
+          <a href="pages/schedule.html"><i class="fas fa-calendar-alt"></i> Schedule</a>
+        </li>
+        <li>
+          <a href="pages/playlists.html"><i class="fas fa-music"></i> Playlists</a>
+        </li>
+        <li>
+          <a href="pages/media-library.html"><i class="fas fa-images"></i> Media Library</a>
+        </li>
+        <li>
+          <a href="#settingsSubmenu" data-bs-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+            <i class="fas fa-cog"></i> Settings
+          </a>
+          <ul class="collapse list-unstyled" id="settingsSubmenu">
+            <li><a href="settings/general.html">General</a></li>
+            <li><a href="settings/api-keys.html">API Keys</a></li>
+            <li><a href="settings/users.html">Users</a></li>
+          </ul>
+        </li>
+      </ul>
+    </nav>
+
+    <!-- Page Content -->
+    <div id="content">
+      <!-- Top Navigation -->
+      <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+          <button type="button" id="sidebarCollapse" class="btn btn-info">
+            <i class="fas fa-bars"></i>
+          </button>
+          <div class="ms-auto">
+            <div class="dropdown">
+              <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="fas fa-user"></i> Admin
+              </button>
+              <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                <li><a class="dropdown-item" href="settings/profile.html">Profile</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" href="#" id="logoutBtn">Logout</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </nav>
+
+      <!-- Dashboard Content -->
+      <div class="container-fluid">
+        <h1 class="mt-4 mb-4">Dashboard</h1>
+        
+        <div class="row">
+          <!-- Statistics Cards -->
+          <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-primary shadow h-100 py-2">
+              <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                  <div class="col mr-2">
+                    <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                      Media Files</div>
+                    <div class="h5 mb-0 font-weight-bold text-gray-800" id="mediaCount">0</div>
+                  </div>
+                  <div class="col-auto">
+                    <i class="fas fa-images fa-2x text-gray-300"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-success shadow h-100 py-2">
+              <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                  <div class="col mr-2">
+                    <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                      News Articles</div>
+                    <div class="h5 mb-0 font-weight-bold text-gray-800" id="newsCount">0</div>
+                  </div>
+                  <div class="col-auto">
+                    <i class="fas fa-newspaper fa-2x text-gray-300"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-info shadow h-100 py-2">
+              <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                  <div class="col mr-2">
+                    <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
+                      Team Members</div>
+                    <div class="h5 mb-0 font-weight-bold text-gray-800" id="teamCount">0</div>
+                  </div>
+                  <div class="col-auto">
+                    <i class="fas fa-users fa-2x text-gray-300"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-warning shadow h-100 py-2">
+              <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                  <div class="col mr-2">
+                    <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+                      Playlists</div>
+                    <div class="h5 mb-0 font-weight-bold text-gray-800" id="playlistCount">0</div>
+                  </div>
+                  <div class="col-auto">
+                    <i class="fas fa-music fa-2x text-gray-300"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Recent Activity -->
+        <div class="row">
+          <div class="col-lg-6">
+            <div class="card shadow mb-4">
+              <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                <h6 class="m-0 font-weight-bold text-primary">Recent News</h6>
+                <a href="pages/news.html" class="btn btn-sm btn-primary">View All</a>
+              </div>
+              <div class="card-body">
+                <div id="recentNews">
+                  <div class="text-center">
+                    <div class="spinner-border text-primary" role="status">
+                      <span class="visually-hidden">Loading...</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-6">
+            <div class="card shadow mb-4">
+              <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                <h6 class="m-0 font-weight-bold text-primary">Recent Media</h6>
+                <a href="pages/media-library.html" class="btn btn-sm btn-primary">View All</a>
+              </div>
+              <div class="card-body">
+                <div id="recentMedia">
+                  <div class="text-center">
+                    <div class="spinner-border text-primary" role="status">
+                      <span class="visually-hidden">Loading...</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="row">
+          <div class="col-12">
+            <div class="card shadow mb-4">
+              <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">Quick Actions</h6>
+              </div>
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-md-3 mb-3">
+                    <a href="pages/news.html?action=new" class="btn btn-primary btn-block w-100">
+                      <i class="fas fa-plus"></i> Add News
+                    </a>
+                  </div>
+                  <div class="col-md-3 mb-3">
+                    <a href="pages/media-library.html?action=upload" class="btn btn-success btn-block w-100">
+                      <i class="fas fa-upload"></i> Upload Media
+                    </a>
+                  </div>
+                  <div class="col-md-3 mb-3">
+                    <a href="pages/team.html?action=new" class="btn btn-info btn-block w-100">
+                      <i class="fas fa-user-plus"></i> Add Team Member
+                    </a>
+                  </div>
+                  <div class="col-md-3 mb-3">
+                    <a href="pages/schedule.html?action=new" class="btn btn-warning btn-block w-100">
+                      <i class="fas fa-calendar-plus"></i> Add Schedule
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap JS Bundle with Popper -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- Admin Dashboard JS -->
+  <script src="js/admin.js"></script>
+  <script src="js/dashboard.js"></script>
+  
+  <script>
+    // Authentication check
+    document.addEventListener('DOMContentLoaded', () => {
+      const token = localStorage.getItem('adminToken');
+      if (!token) {
+        window.location.href = 'login.html';
+      }
+      
+      // Register service worker for PWA support
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('sw.js')
+          .then(registration => {
+            console.log('Service Worker registered with scope:', registration.scope);
+          })
+          .catch(error => {
+            console.error('Service Worker registration failed:', error);
+          });
+      }
+    });
+  </script>
+</body>
+</html>

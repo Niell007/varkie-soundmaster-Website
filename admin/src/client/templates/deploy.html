@@ -1,0 +1,75 @@
+<!-- Deploy Management Section -->
+<div class="content-section">
+  <div class="section-header">
+    <h2><i class="fas fa-rocket"></i> Website Deployment</h2>
+    <p>Deploy your website content to make it live</p>
+  </div>
+
+  <div class="section-content">
+    <div class="card mb-4">
+      <div class="card-body">
+        <h3 class="card-title">Deploy Website</h3>
+        <p class="card-text">
+          Clicking the deploy button will generate all HTML files for your website based on the current content in the database.
+          This includes playlists, schedule, news articles, and the homepage.
+        </p>
+        <div class="alert alert-info">
+          <i class="fas fa-info-circle"></i> Make sure all your content is up to date before deploying.
+        </div>
+        <button id="deploy-website-btn" class="btn btn-primary">
+          <i class="fas fa-rocket"></i> Deploy Website
+        </button>
+      </div>
+    </div>
+
+    <div id="deploy-status" class="mt-4">
+      <!-- Deployment status will be shown here -->
+    </div>
+
+    <div class="card mt-4">
+      <div class="card-header">
+        <h3 class="mb-0">Deployment History</h3>
+      </div>
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>User</th>
+                <th>Status</th>
+                <th>Details</th>
+              </tr>
+            </thead>
+            <tbody id="deployment-history">
+              <tr>
+                <td colspan="4" class="text-center">No deployment history available</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  /* Deploy Manager Styles */
+  #deploy-website-btn {
+    min-width: 180px;
+  }
+  
+  #deploy-status {
+    min-height: 60px;
+  }
+  
+  .deployment-details {
+    max-height: 200px;
+    overflow-y: auto;
+    background-color: #f8f9fa;
+    border-radius: var(--border-radius);
+    padding: 10px;
+    font-family: monospace;
+    font-size: 0.9rem;
+  }
+</style>

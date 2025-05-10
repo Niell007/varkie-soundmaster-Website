@@ -1,4 +1,5 @@
-import { Router } from 'itty-router';
+import { Router, IRequest } from 'itty-router';
+import { RequestWithParams } from './types/request';
 
 // Define environment interface
 export interface Env {
@@ -276,8 +277,16 @@ function getContentType(path: string): string {
 // Export fetch handler
 // Import API routes
 import * as mediaRoutes from './api/media';
+import * as playlistRoutes from './api/playlist';
+import * as scheduleRoutes from './api/schedule';
+import * as newsRoutes from './api/news';
+import * as deployRoutes from './api/deploy';
+import * as userManagementRoutes from './api/user-management';
+import * as analyticsRoutes from './api/analytics';
+import * as mediaLibraryRoutes from './api/media-library';
 
 // Register API routes
+// Media routes
 router.get('/api/media', (request, env) => mediaRoutes.listMedia(request, env));
 router.post('/api/media/upload', (request, env) => mediaRoutes.uploadMedia(request, env));
 router.get('/api/media/:key', (request, env) => mediaRoutes.getMedia(request, env));
@@ -285,6 +294,51 @@ router.get('/api/media/:key/metadata', (request, env) => mediaRoutes.getMediaMet
 router.put('/api/media/:key/metadata', (request, env) => mediaRoutes.updateMediaMetadata(request, env));
 router.delete('/api/media/:key', (request, env) => mediaRoutes.deleteMedia(request, env));
 router.post('/api/media/:key/signedUrl', (request, env) => mediaRoutes.getSignedUrl(request, env));
+
+// Playlist routes
+router.get('/api/playlists', (request, env) => playlistRoutes.getPlaylists(request as unknown as RequestWithParams, env));
+router.post('/api/playlists', (request, env) => playlistRoutes.createPlaylist(request as unknown as RequestWithParams, env));
+router.get('/api/playlists/:id', (request, env) => playlistRoutes.getPlaylist(request as unknown as RequestWithParams, env));
+router.put('/api/playlists/:id', (request, env) => playlistRoutes.updatePlaylist(request as unknown as RequestWithParams, env));
+router.delete('/api/playlists/:id', (request, env) => playlistRoutes.deletePlaylist(request as unknown as RequestWithParams, env));
+
+// Schedule routes
+router.get('/api/schedule', (request, env) => scheduleRoutes.getScheduleItems(request as unknown as RequestWithParams, env));
+router.post('/api/schedule', (request, env) => scheduleRoutes.createScheduleItem(request as unknown as RequestWithParams, env));
+router.get('/api/schedule/:id', (request, env) => scheduleRoutes.getScheduleItem(request as unknown as RequestWithParams, env));
+router.put('/api/schedule/:id', (request, env) => scheduleRoutes.updateScheduleItem(request as unknown as RequestWithParams, env));
+router.delete('/api/schedule/:id', (request, env) => scheduleRoutes.deleteScheduleItem(request as unknown as RequestWithParams, env));
+
+// News routes
+router.get('/api/news', (request, env) => newsRoutes.getNewsItems(request as unknown as RequestWithParams, env));
+router.post('/api/news', (request, env) => newsRoutes.createNewsItem(request as unknown as RequestWithParams, env));
+router.get('/api/news/:id', (request, env) => newsRoutes.getNewsItem(request as unknown as RequestWithParams, env));
+router.put('/api/news/:id', (request, env) => newsRoutes.updateNewsItem(request as unknown as RequestWithParams, env));
+router.delete('/api/news/:id', (request, env) => newsRoutes.deleteNewsItem(request as unknown as RequestWithParams, env));
+
+// Deployment route
+router.post('/api/deploy', (request, env) => deployRoutes.deployWebsite(request as unknown as RequestWithParams, env));
+
+// User Management routes
+router.get('/api/users', (request, env) => userManagementRoutes.getUsers(request as unknown as RequestWithParams, env));
+router.post('/api/users', (request, env) => userManagementRoutes.createUser(request as unknown as RequestWithParams, env));
+router.get('/api/users/permissions', (request, env) => userManagementRoutes.getUserPermissions(request as unknown as RequestWithParams, env));
+router.get('/api/users/:id', (request, env) => userManagementRoutes.getUser(request as unknown as RequestWithParams, env));
+router.put('/api/users/:id', (request, env) => userManagementRoutes.updateUser(request as unknown as RequestWithParams, env));
+router.delete('/api/users/:id', (request, env) => userManagementRoutes.deleteUser(request as unknown as RequestWithParams, env));
+
+// Analytics routes
+router.get('/api/analytics', (request, env) => analyticsRoutes.getAnalytics(request as unknown as RequestWithParams, env));
+router.get('/api/analytics/content', (request, env) => analyticsRoutes.getContentPerformance(request as unknown as RequestWithParams, env));
+
+// Media Library routes
+router.get('/api/media-library', (request, env) => mediaLibraryRoutes.getMediaItems(request as unknown as RequestWithParams, env));
+router.get('/api/media-library/:id', (request, env) => mediaLibraryRoutes.getMediaItem(request as unknown as RequestWithParams, env));
+router.post('/api/media-library/upload', (request, env) => mediaLibraryRoutes.uploadMedia(request as unknown as RequestWithParams, env));
+router.put('/api/media-library/:id', (request, env) => mediaLibraryRoutes.updateMediaMetadata(request as unknown as RequestWithParams, env));
+router.delete('/api/media-library/:id', (request, env) => mediaLibraryRoutes.deleteMedia(request as unknown as RequestWithParams, env));
+router.get('/api/media-library/types', (request, env) => mediaLibraryRoutes.getMediaTypes(request as unknown as RequestWithParams, env));
+router.get('/api/media-library/:id/url', (request, env) => mediaLibraryRoutes.getSignedUrl(request as unknown as RequestWithParams, env));
 
 // Serve the React application for admin routes
 router.get('/admin*', async (request: Request, env: Env) => {

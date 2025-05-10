@@ -1,8 +1,12 @@
-const path = require('path');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+import path from 'path';
+import { fileURLToPath } from 'url';
+import HtmlWebpackPlugin from 'html-webpack-plugin';
+import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 
-module.exports = {
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+export default {
   entry: './src/client/index.tsx',
   output: {
     path: path.resolve(__dirname, 'dist'),
@@ -11,6 +15,7 @@ module.exports = {
     clean: true
   },
   mode: process.env.NODE_ENV || 'development',
+  target: 'web',
   resolve: {
     extensions: ['.tsx', '.ts', '.js', '.jsx'],
     fallback: {
@@ -49,8 +54,11 @@ module.exports = {
     historyApiFallback: true,
     port: 3000,
     hot: true,
-    proxy: {
-      '/api': 'http://localhost:8787'
-    }
+    proxy: [
+      {
+        context: ['/api'],
+        target: 'http://localhost:8787'
+      }
+    ]
   }
 };

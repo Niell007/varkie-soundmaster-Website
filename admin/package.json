@@ -12,7 +12,8 @@
     "build:worker": "wrangler build",
     "dev:worker": "wrangler dev",
     "build:all": "node build.js",
-    "deploy:all": "node build.js --deploy"
+    "deploy:all": "node build.js --deploy",
+    "test:api": "node test/test-api.js"
   },
   "dependencies": {
     "@tsndr/cloudflare-worker-jwt": "^2.4.2",

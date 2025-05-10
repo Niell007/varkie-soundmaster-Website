@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Profile Settings - Soundmaster Admin</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Admin Dashboard CSS -->
+  <link rel="stylesheet" href="../css/admin.css">
+</head>
+<body>
+  <div class="wrapper">
+    <!-- Sidebar -->
+    <nav id="sidebar">
+      <div class="sidebar-header">
+        <h3>Soundmaster</h3>
+        <p>Admin Dashboard</p>
+      </div>
+
+      <ul class="list-unstyled components">
+        <li>
+          <a href="../index.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+        </li>
+        <li>
+          <a href="#pageSubmenu" data-bs-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+            <i class="fas fa-file-alt"></i> Pages
+          </a>
+          <ul class="collapse list-unstyled" id="pageSubmenu">
+            <li><a href="../pages/home.html">Home</a></li>
+            <li><a href="../pages/about.html">About</a></li>
+            <li><a href="../pages/contacts.html">Contacts</a></li>
+          </ul>
+        </li>
+        <li>
+          <a href="../pages/news.html"><i class="fas fa-newspaper"></i> News</a>
+        </li>
+        <li>
+          <a href="../pages/on-demand.html"><i class="fas fa-play-circle"></i> On-Demand</a>
+        </li>
+        <li>
+          <a href="../pages/team.html"><i class="fas fa-users"></i> Team</a>
+        </li>
+        <li>
+          <a href="../pages/schedule.html"><i class="fas fa-calendar-alt"></i> Schedule</a>
+        </li>
+        <li>
+          <a href="../pages/playlists.html"><i class="fas fa-music"></i> Playlists</a>
+        </li>
+        <li>
+          <a href="../pages/media-library.html"><i class="fas fa-images"></i> Media Library</a>
+        </li>
+        <li>
+          <a href="#settingsSubmenu" data-bs-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+            <i class="fas fa-cog"></i> Settings
+          </a>
+          <ul class="collapse list-unstyled" id="settingsSubmenu">
+            <li><a href="general.html">General</a></li>
+            <li><a href="api-keys.html">API Keys</a></li>
+            <li><a href="users.html">Users</a></li>
+          </ul>
+        </li>
+      </ul>
+    </nav>
+
+    <!-- Page Content -->
+    <div id="content">
+      <!-- Top Navigation -->
+      <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+          <button type="button" id="sidebarCollapse" class="btn btn-info">
+            <i class="fas fa-bars"></i>
+          </button>
+          <div class="ms-auto">
+            <div class="dropdown">
+              <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="fas fa-user"></i> <span id="currentUsername">Admin</span>
+              </button>
+              <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                <li><a class="dropdown-item active" href="profile.html">Profile</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" href="#" id="logoutBtn">Logout</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </nav>
+
+      <!-- Profile Content -->
+      <div class="container-fluid">
+        <h1 class="mb-4">Profile Settings</h1>
+
+        <div class="row">
+          <div class="col-lg-8">
+            <!-- Account Information -->
+            <div class="card shadow mb-4">
+              <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">Account Information</h6>
+              </div>
+              <div class="card-body">
+                <form id="profileForm">
+                  <div class="mb-3">
+                    <label for="username" class="form-label">Username</label>
+                    <input type="text" class="form-control" id="username" placeholder="Username" readonly>
+                    <small class="text-muted">Username cannot be changed</small>
+                  </div>
+                  
+                  <div class="mb-3">
+                    <label for="email" class="form-label">Email Address</label>
+                    <input type="email" class="form-control" id="email" placeholder="Email">
+                  </div>
+                  
+                  <div class="mb-3">
+                    <label for="fullName" class="form-label">Full Name</label>
+                    <input type="text" class="form-control" id="fullName" placeholder="Full Name">
+                  </div>
+                  
+                  <div class="mb-3">
+                    <label for="role" class="form-label">Role</label>
+                    <input type="text" class="form-control" id="role" readonly>
+                    <small class="text-muted">Role can only be changed by an administrator</small>
+                  </div>
+                  
+                  <button type="button" id="saveProfileBtn" class="btn btn-primary">
+                    <i class="fas fa-save"></i> Save Changes
+                  </button>
+                </form>
+              </div>
+            </div>
+            
+            <!-- Change Password -->
+            <div class="card shadow mb-4">
+              <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">Change Password</h6>
+              </div>
+              <div class="card-body">
+                <form id="passwordForm">
+                  <div class="mb-3">
+                    <label for="currentPassword" class="form-label">Current Password</label>
+                    <div class="input-group">
+                      <input type="password" class="form-control" id="currentPassword" placeholder="Current Password">
+                      <button class="btn btn-outline-secondary toggle-password" type="button" data-target="currentPassword">
+                        <i class="fas fa-eye"></i>
+                      </button>
+                    </div>
+                  </div>
+                  
+                  <div class="mb-3">
+                    <label for="newPassword" class="form-label">New Password</label>
+                    <div class="input-group">
+                      <input type="password" class="form-control" id="newPassword" placeholder="New Password">
+                      <button class="btn btn-outline-secondary toggle-password" type="button" data-target="newPassword">
+                        <i class="fas fa-eye"></i>
+                      </button>
+                    </div>
+                  </div>
+                  
+                  <div class="mb-3">
+                    <label for="confirmPassword" class="form-label">Confirm New Password</label>
+                    <div class="input-group">
+                      <input type="password" class="form-control" id="confirmPassword" placeholder="Confirm New Password">
+                      <button class="btn btn-outline-secondary toggle-password" type="button" data-target="confirmPassword">
+                        <i class="fas fa-eye"></i>
+                      </button>
+                    </div>
+                  </div>
+                  
+                  <button type="button" id="changePasswordBtn" class="btn btn-primary">
+                    <i class="fas fa-key"></i> Change Password
+                  </button>
+                </form>
+              </div>
+            </div>
+          </div>
+          
+          <div class="col-lg-4">
+            <!-- Profile Picture -->
+            <div class="card shadow mb-4">
+              <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">Profile Picture</h6>
+              </div>
+              <div class="card-body text-center">
+                <div class="mb-3">
+                  <img id="profilePicture" src="../img/default-avatar.png" alt="Profile Picture" class="img-fluid rounded-circle mb-3" style="width: 150px; height: 150px; object-fit: cover;">
+                </div>
+                
+                <div class="mb-3">
+                  <label for="profilePictureFile" class="form-label">Upload New Picture</label>
+                  <input class="form-control" type="file" id="profilePictureFile" accept="image/*">
+                </div>
+                
+                <button type="button" id="uploadPictureBtn" class="btn btn-primary">
+                  <i class="fas fa-upload"></i> Upload
+                </button>
+              </div>
+            </div>
+            
+            <!-- Account Activity -->
+            <div class="card shadow mb-4">
+              <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">Account Activity</h6>
+              </div>
+              <div class="card-body">
+                <div class="mb-3">
+                  <strong>Last Login:</strong>
+                  <p id="lastLoginTime">Loading...</p>
+                </div>
+                
+                <div class="mb-3">
+                  <strong>Account Created:</strong>
+                  <p id="accountCreatedTime">Loading...</p>
+                </div>
+                
+                <div class="mb-3">
+                  <strong>Last Password Change:</strong>
+                  <p id="lastPasswordChangeTime">Loading...</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap JS Bundle with Popper -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- Admin Dashboard JS -->
+  <script src="../js/admin.js"></script>
+  <script src="../js/settings.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Initialize password toggle buttons
+      initPasswordToggles();
+      
+      // Check authentication
+      checkAuth();
+      
+      // Load profile data
+      loadProfileData();
+      
+      // Save profile button
+      document.getElementById('saveProfileBtn').addEventListener('click', saveProfileData);
+      
+      // Change password button
+      document.getElementById('changePasswordBtn').addEventListener('click', changePassword);
+      
+      // Upload profile picture button
+      document.getElementById('uploadPictureBtn').addEventListener('click', uploadProfilePicture);
+    });
+    
+    /**
+     * Load profile data from the API
+     */
+    async function loadProfileData() {
+      try {
+        showLoader();
+        
+        // Get current user ID from token
+        const tokenData = parseJwt(localStorage.getItem('adminToken'));
+        if (!tokenData || !tokenData.id) {
+          UI.showToast('Authentication error', 'error');
+          api.logout();
+          return;
+        }
+        
+        const userId = tokenData.id;
+        const response = await api.getUser(userId);
+        
+        if (response.success) {
+          const user = response.data;
+          
+          // Update profile form
+          document.getElementById('username').value = user.username;
+          document.getElementById('email').value = user.email;
+          document.getElementById('fullName').value = user.fullName || '';
+          document.getElementById('role').value = user.role;
+          
+          // Update username in navbar
+          document.getElementById('currentUsername').textContent = user.username;
+          
+          // Update profile picture if available
+          if (user.profilePicture) {
+            document.getElementById('profilePicture').src = user.profilePicture;
+          }
+          
+          // Update account activity
+          document.getElementById('lastLoginTime').textContent = user.lastLogin ? UI.formatDate(user.lastLogin) : 'Never';
+          document.getElementById('accountCreatedTime').textContent = user.createdAt ? UI.formatDate(user.createdAt) : 'Unknown';
+          document.getElementById('lastPasswordChangeTime').textContent = user.lastPasswordChange ? UI.formatDate(user.lastPasswordChange) : 'Never';
+        } else {
+          UI.showToast('Failed to load profile data', 'error');
+        }
+      } catch (error) {
+        console.error('Error loading profile data:', error);
+        UI.showToast('Failed to load profile data', 'error');
+      } finally {
+        hideLoader();
+      }
+    }
+    
+    /**
+     * Save profile data to the API
+     */
+    async function saveProfileData() {
+      try {
+        showLoader();
+        
+        // Get current user ID from token
+        const tokenData = parseJwt(localStorage.getItem('adminToken'));
+        if (!tokenData || !tokenData.id) {
+          UI.showToast('Authentication error', 'error');
+          return;
+        }
+        
+        const userId = tokenData.id;
+        const email = document.getElementById('email').value;
+        const fullName = document.getElementById('fullName').value;
+        
+        if (!email) {
+          UI.showToast('Email is required', 'error');
+          hideLoader();
+          return;
+        }
+        
+        const userData = {
+          email,
+          fullName
+        };
+        
+        const response = await api.updateUser(userId, userData);
+        
+        if (response.success) {
+          UI.showToast('Profile updated successfully', 'success');
+          // Update username in navbar if it changed
+          document.getElementById('currentUsername').textContent = response.data.username;
+        } else {
+          UI.showToast(response.message || 'Failed to update profile', 'error');
+        }
+      } catch (error) {
+        console.error('Error saving profile data:', error);
+        UI.showToast('Failed to update profile', 'error');
+      } finally {
+        hideLoader();
+      }
+    }
+    
+    /**
+     * Change password
+     */
+    async function changePassword() {
+      try {
+        const currentPassword = document.getElementById('currentPassword').value;
+        const newPassword = document.getElementById('newPassword').value;
+        const confirmPassword = document.getElementById('confirmPassword').value;
+        
+        if (!currentPassword || !newPassword || !confirmPassword) {
+          UI.showToast('All password fields are required', 'error');
+          return;
+        }
+        
+        if (newPassword !== confirmPassword) {
+          UI.showToast('New passwords do not match', 'error');
+          return;
+        }
+        
+        showLoader();
+        
+        // Get current user ID from token
+        const tokenData = parseJwt(localStorage.getItem('adminToken'));
+        if (!tokenData || !tokenData.id) {
+          UI.showToast('Authentication error', 'error');
+          return;
+        }
+        
+        const userId = tokenData.id;
+        
+        const response = await api.changePassword(userId, currentPassword, newPassword);
+        
+        if (response.success) {
+          UI.showToast('Password changed successfully', 'success');
+          // Clear password fields
+          document.getElementById('currentPassword').value = '';
+          document.getElementById('newPassword').value = '';
+          document.getElementById('confirmPassword').value = '';
+          // Reload profile data to update last password change time
+          loadProfileData();
+        } else {
+          UI.showToast(response.message || 'Failed to change password', 'error');
+        }
+      } catch (error) {
+        console.error('Error changing password:', error);
+        UI.showToast('Failed to change password', 'error');
+      } finally {
+        hideLoader();
+      }
+    }
+    
+    /**
+     * Upload profile picture
+     */
+    async function uploadProfilePicture() {
+      const fileInput = document.getElementById('profilePictureFile');
+      const file = fileInput.files[0];
+      
+      if (!file) {
+        UI.showToast('Please select a file', 'error');
+        return;
+      }
+      
+      try {
+        showLoader();
+        
+        // Get current user ID from token
+        const tokenData = parseJwt(localStorage.getItem('adminToken'));
+        if (!tokenData || !tokenData.id) {
+          UI.showToast('Authentication error', 'error');
+          return;
+        }
+        
+        const userId = tokenData.id;
+        
+        // Create form data
+        const formData = new FormData();
+        formData.append('profilePicture', file);
+        
+        const response = await api.updateUser(userId, formData, true);
+        
+        if (response.success) {
+          UI.showToast('Profile picture updated successfully', 'success');
+          // Update profile picture
+          if (response.data.profilePicture) {
+            document.getElementById('profilePicture').src = response.data.profilePicture;
+          }
+          // Clear file input
+          fileInput.value = '';
+        } else {
+          UI.showToast(response.message || 'Failed to update profile picture', 'error');
+        }
+      } catch (error) {
+        console.error('Error uploading profile picture:', error);
+        UI.showToast('Failed to upload profile picture', 'error');
+      } finally {
+        hideLoader();
+      }
+    }
+    
+    /**
+     * Parse JWT token
+     * @param {string} token - JWT token
+     * @returns {Object} Decoded token payload
+     */
+    function parseJwt(token) {
+      if (!token) return null;
+      
+      try {
+        const base64Url = token.split('.')[1];
+        const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+        const jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
+          return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+        }).join(''));
+        
+        return JSON.parse(jsonPayload);
+      } catch (error) {
+        console.error('Error parsing JWT:', error);
+        return null;
+      }
+    }
+  </script>
+</body>
+</html>

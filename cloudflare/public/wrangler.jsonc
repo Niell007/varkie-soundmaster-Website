@@ -1,0 +1,19 @@
+{
+  "name": "varkie-soundmaster-public",
+  "compatibility_date": "2025-02-11",
+  "compatibility_flags": ["nodejs_compat"],
+  "pages_build_output_dir": ".",
+  "r2_buckets": [
+    {
+      "binding": "MEDIA_BUCKET",
+      "bucket_name": "soundmaster-media"
+    }
+  ],
+  "d1_databases": [
+    {
+      "binding": "SITE_DB",
+      "database_name": "soundmaster-db",
+      "database_id": "1e77877a-f902-4fc1-bd62-d2605c5e9df2"
+    }
+  ]
+}

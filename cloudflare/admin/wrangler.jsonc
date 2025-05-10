@@ -1,0 +1,134 @@
+{
+  "name": "varkie-soundmaster-admin",
+  "main": "src/index.ts",
+  "compatibility_date": "2025-02-11",
+  "compatibility_flags": ["nodejs_compat"],
+  "observability": {
+    "enabled": true,
+    "head_sampling_rate": 1
+  },
+  "r2_buckets": [
+    {
+      "binding": "MEDIA_BUCKET",
+      "bucket_name": "soundmaster-media"
+    }
+  ],
+  "d1_databases": [
+    {
+      "binding": "SITE_DB",
+      "database_name": "soundmaster-db",
+      "database_id": "1e77877a-f902-4fc1-bd62-d2605c5e9df2"
+    }
+  ],
+  "analytics_engine_datasets": [
+    {
+      "binding": "ANALYTICS",
+      "dataset": "soundmaster_admin_analytics"
+    }
+  ],
+  "vars": {
+    "ADMIN_USERNAME": "admin",
+    "API_BASE_URL": "/api",
+    "PUBLIC_SITE_URL": "https://varkie-soundmaster-public.pages.dev",
+    "CORS_ALLOWED_ORIGINS": "https://varkie-soundmaster-public.pages.dev"
+  },
+  "assets": {
+    "binding": "ASSETS",
+    "directory": "./src/client"
+  },
+  "triggers": {
+    "crons": ["0 0 * * *"] // Daily backup at midnight
+  },
+  // Using hardcoded credentials for simplicity
+  // JWT_SECRET is generated at runtime
+  "env": {
+    "production": {
+      "routes": [
+        { "pattern": "admin.soundmaster.com", "custom_domain": true }
+      ],
+      "r2_buckets": [
+        {
+          "binding": "MEDIA_BUCKET",
+          "bucket_name": "soundmaster-media"
+        }
+      ],
+      "d1_databases": [
+        {
+          "binding": "SITE_DB",
+          "database_name": "soundmaster-db",
+          "database_id": "1e77877a-f902-4fc1-bd62-d2605c5e9df2"
+        }
+      ],
+      "analytics_engine_datasets": [
+        {
+          "binding": "ANALYTICS",
+          "dataset": "soundmaster_admin_analytics"
+        }
+      ],
+      "vars": {
+        "ADMIN_USERNAME": "admin",
+        "API_BASE_URL": "/api",
+        "PUBLIC_SITE_URL": "https://varkie-soundmaster-public.pages.dev",
+        "CORS_ALLOWED_ORIGINS": "https://varkie-soundmaster-public.pages.dev"
+      }
+    },
+    "staging": {
+      "name": "varkie-soundmaster-admin-staging",
+      "r2_buckets": [
+        {
+          "binding": "MEDIA_BUCKET",
+          "bucket_name": "soundmaster-media-staging"
+        }
+      ],
+      "d1_databases": [
+        {
+          "binding": "SITE_DB",
+          "database_name": "soundmaster-db-staging",
+          "database_id": "1e77877a-f902-4fc1-bd62-d2605c5e9df2"
+        }
+      ],
+      "analytics_engine_datasets": [
+        {
+          "binding": "ANALYTICS",
+          "dataset": "soundmaster_admin_analytics_staging"
+        }
+      ],
+      "vars": {
+        "ADMIN_USERNAME": "admin",
+        "API_BASE_URL": "/api",
+        "PUBLIC_SITE_URL": "https://staging.varkie-soundmaster-public.pages.dev",
+        "CORS_ALLOWED_ORIGINS": "https://staging.varkie-soundmaster-public.pages.dev",
+        "ENVIRONMENT": "staging"
+      }
+    },
+    "development": {
+      "name": "varkie-soundmaster-admin-dev",
+      "r2_buckets": [
+        {
+          "binding": "MEDIA_BUCKET",
+          "bucket_name": "soundmaster-media-dev"
+        }
+      ],
+      "d1_databases": [
+        {
+          "binding": "SITE_DB",
+          "database_name": "soundmaster-db-dev",
+          "database_id": "1e77877a-f902-4fc1-bd62-d2605c5e9df2"
+        }
+      ],
+      "analytics_engine_datasets": [
+        {
+          "binding": "ANALYTICS",
+          "dataset": "soundmaster_admin_analytics_dev"
+        }
+      ],
+      "vars": {
+        "ADMIN_USERNAME": "admin",
+        "API_BASE_URL": "/api",
+        "PUBLIC_SITE_URL": "https://development.varkie-soundmaster-public.pages.dev",
+        "CORS_ALLOWED_ORIGINS": "https://development.varkie-soundmaster-public.pages.dev",
+        "ENVIRONMENT": "development"
+      }
+    }
+  }
+}

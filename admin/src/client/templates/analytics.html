@@ -1,0 +1,225 @@
+<!-- Analytics Dashboard Template for Soundmaster Admin Dashboard -->
+<div class="container-fluid px-4">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h1 class="mt-4">Analytics Dashboard</h1>
+    <button id="refresh-analytics" class="btn btn-primary">
+      <i class="bi bi-arrow-clockwise"></i> Refresh Data
+    </button>
+  </div>
+  
+  <!-- Alert Container -->
+  <div id="analytics-error"></div>
+  
+  <!-- Time Period Selector -->
+  <div class="card mb-4">
+    <div class="card-body">
+      <div class="btn-group" role="group" aria-label="Time period selector">
+        <button type="button" class="btn btn-outline-primary period-selector" data-period="day">Day</button>
+        <button type="button" class="btn btn-outline-primary period-selector active" data-period="week">Week</button>
+        <button type="button" class="btn btn-outline-primary period-selector" data-period="month">Month</button>
+        <button type="button" class="btn btn-outline-primary period-selector" data-period="year">Year</button>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Summary Metrics -->
+  <div class="row row-cols-1 row-cols-md-2 row-cols-xl-5 g-4 mb-4">
+    <div class="col">
+      <div class="card h-100">
+        <div class="card-body">
+          <div class="d-flex justify-content-between align-items-center">
+            <div>
+              <h6 class="text-muted mb-1">Visitors</h6>
+              <div class="analytics-loading spinner-border spinner-border-sm text-primary" role="status">
+                <span class="visually-hidden">Loading...</span>
+              </div>
+              <h2 class="analytics-content mb-0" style="display: none;"><span id="visitor-count">0</span></h2>
+            </div>
+            <div class="rounded-circle bg-light p-2">
+              <i class="bi bi-people fs-4 text-primary"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col">
+      <div class="card h-100">
+        <div class="card-body">
+          <div class="d-flex justify-content-between align-items-center">
+            <div>
+              <h6 class="text-muted mb-1">Page Views</h6>
+              <div class="analytics-loading spinner-border spinner-border-sm text-success" role="status">
+                <span class="visually-hidden">Loading...</span>
+              </div>
+              <h2 class="analytics-content mb-0" style="display: none;"><span id="page-views">0</span></h2>
+            </div>
+            <div class="rounded-circle bg-light p-2">
+              <i class="bi bi-eye fs-4 text-success"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col">
+      <div class="card h-100">
+        <div class="card-body">
+          <div class="d-flex justify-content-between align-items-center">
+            <div>
+              <h6 class="text-muted mb-1">Bounce Rate</h6>
+              <div class="analytics-loading spinner-border spinner-border-sm text-warning" role="status">
+                <span class="visually-hidden">Loading...</span>
+              </div>
+              <h2 class="analytics-content mb-0" style="display: none;"><span id="bounce-rate">0%</span></h2>
+            </div>
+            <div class="rounded-circle bg-light p-2">
+              <i class="bi bi-arrow-return-left fs-4 text-warning"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col">
+      <div class="card h-100">
+        <div class="card-body">
+          <div class="d-flex justify-content-between align-items-center">
+            <div>
+              <h6 class="text-muted mb-1">Avg. Time</h6>
+              <div class="analytics-loading spinner-border spinner-border-sm text-info" role="status">
+                <span class="visually-hidden">Loading...</span>
+              </div>
+              <h2 class="analytics-content mb-0" style="display: none;"><span id="avg-time">0s</span></h2>
+            </div>
+            <div class="rounded-circle bg-light p-2">
+              <i class="bi bi-clock fs-4 text-info"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col">
+      <div class="card h-100">
+        <div class="card-body">
+          <div class="d-flex justify-content-between align-items-center">
+            <div>
+              <h6 class="text-muted mb-1">Pages/Visit</h6>
+              <div class="analytics-loading spinner-border spinner-border-sm text-danger" role="status">
+                <span class="visually-hidden">Loading...</span>
+              </div>
+              <h2 class="analytics-content mb-0" style="display: none;"><span id="avg-pages">0</span></h2>
+            </div>
+            <div class="rounded-circle bg-light p-2">
+              <i class="bi bi-file-earmark fs-4 text-danger"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Visitor Chart -->
+  <div class="card mb-4">
+    <div class="card-header">
+      <i class="bi bi-graph-up"></i>
+      Traffic Overview
+    </div>
+    <div class="card-body">
+      <div class="analytics-loading d-flex justify-content-center">
+        <div class="spinner-border text-primary" role="status">
+          <span class="visually-hidden">Loading...</span>
+        </div>
+      </div>
+      <div class="analytics-content" style="display: none;">
+        <div style="height: 300px;">
+          <canvas id="visitor-chart"></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Traffic Sources and Devices -->
+  <div class="row mb-4">
+    <div class="col-md-6">
+      <div class="card h-100">
+        <div class="card-header">
+          <i class="bi bi-signpost-split"></i>
+          Traffic Sources
+        </div>
+        <div class="card-body">
+          <div class="analytics-loading d-flex justify-content-center">
+            <div class="spinner-border text-primary" role="status">
+              <span class="visually-hidden">Loading...</span>
+            </div>
+          </div>
+          <div class="analytics-content" style="display: none;">
+            <div style="height: 250px;">
+              <canvas id="sources-chart"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="card h-100">
+        <div class="card-header">
+          <i class="bi bi-devices"></i>
+          Device Types
+        </div>
+        <div class="card-body">
+          <div class="analytics-loading d-flex justify-content-center">
+            <div class="spinner-border text-primary" role="status">
+              <span class="visually-hidden">Loading...</span>
+            </div>
+          </div>
+          <div class="analytics-content" style="display: none;">
+            <div style="height: 250px;">
+              <canvas id="devices-chart"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Content Performance -->
+  <div class="card mb-4">
+    <div class="card-header d-flex justify-content-between align-items-center">
+      <div>
+        <i class="bi bi-bar-chart"></i>
+        Content Performance
+      </div>
+      <div>
+        <select id="content-type-selector" class="form-select form-select-sm" style="width: auto;">
+          <option value="all">All Content</option>
+          <option value="playlist">Playlists</option>
+          <option value="news">News</option>
+          <option value="show">Shows</option>
+        </select>
+      </div>
+    </div>
+    <div class="card-body">
+      <div id="content-performance-error"></div>
+      <div id="content-performance-loading" class="d-flex justify-content-center">
+        <div class="spinner-border text-primary" role="status">
+          <span class="visually-hidden">Loading...</span>
+        </div>
+      </div>
+      <div id="content-performance-content" style="display: none;">
+        <div class="table-responsive">
+          <table class="table table-striped table-hover" id="content-performance-table">
+            <thead>
+              <tr>
+                <th>Content</th>
+                <th class="text-end">Views</th>
+                <th class="text-end">Engagement</th>
+                <th class="text-end">Avg. Time</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- Content performance data will be loaded here -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

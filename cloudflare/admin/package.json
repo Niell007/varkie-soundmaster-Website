@@ -1,0 +1,20 @@
+{
+  "name": "soundmaster-admin",
+  "version": "1.0.0",
+  "description": "Soundmaster Admin Panel",
+  "main": "src/index.ts",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy"
+  },
+  "dependencies": {
+    "@types/jsonwebtoken": "^9.0.9",
+    "jsonwebtoken": "^9.0.2",
+    "node-buffer": "^1.0.3"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20250510.0",
+    "typescript": "^5.0.4",
+    "wrangler": "^4.14.4"
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "name": "soundmaster-public",
+  "version": "1.0.0",
+  "description": "Soundmaster Public Website",
+  "scripts": {
+    "dev": "wrangler pages dev .",
+    "deploy": "wrangler pages deploy ."
+  },
+  "devDependencies": {
+    "wrangler": "^3.0.0"
+  }
+}

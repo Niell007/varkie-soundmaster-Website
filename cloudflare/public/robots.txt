@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://varkie-soundmaster-public.pages.dev/sitemap.xml
+
+# Disallow admin paths
+Disallow: /admin/

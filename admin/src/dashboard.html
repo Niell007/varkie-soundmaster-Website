@@ -135,9 +135,33 @@
               </a>
             </li>
             <li class="nav-item">
+              <a class="nav-link" href="#news">
+                <i class="fas fa-newspaper me-2"></i>
+                News
+              </a>
+            </li>
+            <li class="nav-item">
               <a class="nav-link" href="#users">
                 <i class="fas fa-users me-2"></i>
                 Users
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#analytics">
+                <i class="fas fa-chart-bar me-2"></i>
+                Analytics
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#media">
+                <i class="fas fa-images me-2"></i>
+                Media Library
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#deploy">
+                <i class="fas fa-rocket me-2"></i>
+                Deploy
               </a>
             </li>
             <li class="nav-item">
@@ -297,6 +321,31 @@
             </div>
           </div>
         </div>
+
+        <!-- News Management Container -->
+        <div id="news-container" style="display: none;">
+          <!-- News content will be loaded here -->
+        </div>
+
+        <!-- User Management Container -->
+        <div id="users-container" style="display: none;">
+          <!-- User management content will be loaded here -->
+        </div>
+
+        <!-- Analytics Dashboard Container -->
+        <div id="analytics-container" style="display: none;">
+          <!-- Analytics content will be loaded here -->
+        </div>
+
+        <!-- Media Library Container -->
+        <div id="media-container" style="display: none;">
+          <!-- Media library content will be loaded here -->
+        </div>
+
+        <!-- Deploy Website Container -->
+        <div id="deploy-container" style="display: none;">
+          <!-- Deploy content will be loaded here -->
+        </div>
       </main>
     </div>
   </div>
@@ -325,6 +374,161 @@
           
           // Update page title
           document.getElementById('pageTitle').textContent = this.textContent.trim();
+          
+          // Get the section from the href
+          var section = this.getAttribute('href').substring(1);
+          
+          // Hide all content sections
+          document.querySelectorAll('main > div').forEach(function(div) {
+            div.style.display = 'none';
+          });
+          
+          // Show the selected section
+          if (section === 'dashboard') {
+            // Show dashboard content
+            document.querySelector('.row.row-cols-1').style.display = 'flex';
+            document.querySelector('.row:not(.row-cols-1)').style.display = 'flex';
+          } else if (section === 'news') {
+            // Show news content
+            document.getElementById('news-container').style.display = 'block';
+            
+            // Load news content if not already loaded
+            if (document.getElementById('news-container').children.length === 0) {
+              // Load news.js module
+              import('./js/news-manager.js')
+                .then(module => {
+                  // Initialize news manager
+                  if (typeof module.initNewsManager === 'function') {
+                    module.initNewsManager();
+                  }
+                })
+                .catch(error => {
+                  console.error('Error loading news manager:', error);
+                });
+                
+              // Load news template
+              fetch('templates/news.html')
+                .then(response => response.text())
+                .then(html => {
+                  document.getElementById('news-container').innerHTML = html;
+                })
+                .catch(error => {
+                  console.error('Error loading news template:', error);
+                });
+            }
+          } else if (section === 'users') {
+            // Show users content
+            document.getElementById('users-container').style.display = 'block';
+            
+            // Load users content if not already loaded
+            if (document.getElementById('users-container').children.length === 0) {
+              // Load user-manager.js module
+              import('./js/user-manager.js')
+                .then(module => {
+                  // Initialize user manager
+                  if (typeof module.initUserManager === 'function') {
+                    module.initUserManager();
+                  }
+                })
+                .catch(error => {
+                  console.error('Error loading user manager:', error);
+                });
+                
+              // Load users template
+              fetch('templates/users.html')
+                .then(response => response.text())
+                .then(html => {
+                  document.getElementById('users-container').innerHTML = html;
+                })
+                .catch(error => {
+                  console.error('Error loading users template:', error);
+                });
+            }
+          } else if (section === 'analytics') {
+            // Show analytics content
+            document.getElementById('analytics-container').style.display = 'block';
+            
+            // Load analytics content if not already loaded
+            if (document.getElementById('analytics-container').children.length === 0) {
+              // Load analytics-manager.js module
+              import('./js/analytics-manager.js')
+                .then(module => {
+                  // Initialize analytics manager
+                  if (typeof module.initAnalyticsManager === 'function') {
+                    module.initAnalyticsManager();
+                  }
+                })
+                .catch(error => {
+                  console.error('Error loading analytics manager:', error);
+                });
+                
+              // Load analytics template
+              fetch('templates/analytics.html')
+                .then(response => response.text())
+                .then(html => {
+                  document.getElementById('analytics-container').innerHTML = html;
+                })
+                .catch(error => {
+                  console.error('Error loading analytics template:', error);
+                });
+            }
+          } else if (section === 'media') {
+            // Show media library content
+            document.getElementById('media-container').style.display = 'block';
+            
+            // Load media library content if not already loaded
+            if (document.getElementById('media-container').children.length === 0) {
+              // Load media-library.js module
+              import('./js/media-library.js')
+                .then(module => {
+                  // Initialize media library
+                  if (typeof module.initMediaLibrary === 'function') {
+                    module.initMediaLibrary();
+                  }
+                })
+                .catch(error => {
+                  console.error('Error loading media library:', error);
+                });
+                
+              // Load media library template
+              fetch('templates/media-library.html')
+                .then(response => response.text())
+                .then(html => {
+                  document.getElementById('media-container').innerHTML = html;
+                })
+                .catch(error => {
+                  console.error('Error loading media library template:', error);
+                });
+            }
+          } else if (section === 'deploy') {
+            // Show deploy content
+            document.getElementById('deploy-container').style.display = 'block';
+            
+            // Load deploy content if not already loaded
+            if (document.getElementById('deploy-container').children.length === 0) {
+              // Load deploy.js module
+              import('./js/deploy-manager.js')
+                .then(module => {
+                  // Initialize deploy manager
+                  if (typeof module.initDeployManager === 'function') {
+                    module.initDeployManager();
+                  }
+                })
+                .catch(error => {
+                  console.error('Error loading deploy manager:', error);
+                });
+                
+              // Load deploy template
+              fetch('templates/deploy.html')
+                .then(response => response.text())
+                .then(html => {
+                  document.getElementById('deploy-container').innerHTML = html;
+                })
+                .catch(error => {
+                  console.error('Error loading deploy template:', error);
+                });
+            }
+          }
         });
       });
       

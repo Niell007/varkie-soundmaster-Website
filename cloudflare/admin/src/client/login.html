@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login - Soundmaster Admin</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    body {
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      background-color: #f8f9fa;
+    }
+    .login-container {
+      max-width: 400px;
+      width: 100%;
+      padding: 15px;
+      margin: auto;
+    }
+    .card {
+      border: none;
+      border-radius: 10px;
+      box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+    }
+    .card-header {
+      background-color: #0055b3;
+      color: white;
+      text-align: center;
+      border-radius: 10px 10px 0 0 !important;
+      padding: 1.5rem;
+    }
+    .logo {
+      font-size: 1.8rem;
+      font-weight: bold;
+      margin-bottom: 0.5rem;
+    }
+    .form-floating {
+      margin-bottom: 1rem;
+    }
+    .btn-primary {
+      background-color: #0055b3;
+      border-color: #0055b3;
+      width: 100%;
+      padding: 0.75rem;
+    }
+    .btn-primary:hover {
+      background-color: #004494;
+      border-color: #004494;
+    }
+    .alert {
+      display: none;
+      margin-top: 1rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="login-container">
+    <div class="card">
+      <div class="card-header">
+        <div class="logo">Soundmaster</div>
+        <p class="mb-0">Admin Dashboard</p>
+      </div>
+      <div class="card-body p-4">
+        <h5 class="card-title text-center mb-4">Sign In</h5>
+        
+        <div class="alert alert-danger" id="loginAlert" role="alert">
+          <i class="fas fa-exclamation-circle me-2"></i>
+          <span id="alertMessage">Invalid username or password</span>
+        </div>
+        
+        <form id="loginForm">
+          <div class="form-floating">
+            <input type="text" class="form-control" id="username" placeholder="Username" required>
+            <label for="username">Username</label>
+          </div>
+          
+          <div class="form-floating">
+            <input type="password" class="form-control" id="password" placeholder="Password" required>
+            <label for="password">Password</label>
+          </div>
+          
+          <div class="form-check mb-3">
+            <input class="form-check-input" type="checkbox" id="rememberMe">
+            <label class="form-check-label" for="rememberMe">
+              Remember me
+            </label>
+          </div>
+          
+          <button type="submit" class="btn btn-primary" id="loginButton">
+            <span id="loginText">Sign In</span>
+            <span id="loginSpinner" class="spinner-border spinner-border-sm ms-2" role="status" style="display: none;">
+              <span class="visually-hidden">Loading...</span>
+            </span>
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap JS Bundle with Popper -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const loginForm = document.getElementById('loginForm');
+      const loginButton = document.getElementById('loginButton');
+      const loginText = document.getElementById('loginText');
+      const loginSpinner = document.getElementById('loginSpinner');
+      const loginAlert = document.getElementById('loginAlert');
+      const alertMessage = document.getElementById('alertMessage');
+      
+      // Check if already logged in
+      const token = localStorage.getItem('adminToken');
+      if (token) {
+        window.location.href = 'index.html';
+      }
+      
+      loginForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        
+        // Get form values
+        const username = document.getElementById('username').value;
+        const password = document.getElementById('password').value;
+        const rememberMe = document.getElementById('rememberMe').checked;
+        
+        // Show loading state
+        loginButton.disabled = true;
+        loginText.textContent = 'Signing in...';
+        loginSpinner.style.display = 'inline-block';
+        loginAlert.style.display = 'none';
+        
+        try {
+          // Make login request
+          const response = await fetch('/api/auth/login', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ username, password })
+          });
+          
+          const data = await response.json();
+          
+          if (response.ok && data.success && data.token) {
+            // Store token
+            localStorage.setItem('adminToken', data.token);
+            
+            // Store username if remember me is checked
+            if (rememberMe) {
+              localStorage.setItem('adminUsername', username);
+            } else {
+              localStorage.removeItem('adminUsername');
+            }
+            
+            // Redirect to dashboard
+            window.location.href = 'index.html';
+          } else {
+            // Show error message
+            alertMessage.textContent = data.error || 'Invalid username or password';
+            loginAlert.style.display = 'block';
+            
+            // Reset form state
+            loginButton.disabled = false;
+            loginText.textContent = 'Sign In';
+            loginSpinner.style.display = 'none';
+          }
+        } catch (error) {
+          console.error('Login error:', error);
+          
+          // Show error message
+          alertMessage.textContent = 'Connection error. Please try again.';
+          loginAlert.style.display = 'block';
+          
+          // Reset form state
+          loginButton.disabled = false;
+          loginText.textContent = 'Sign In';
+          loginSpinner.style.display = 'none';
+        }
+      });
+      
+      // Fill username if remembered
+      const rememberedUsername = localStorage.getItem('adminUsername');
+      if (rememberedUsername) {
+        document.getElementById('username').value = rememberedUsername;
+        document.getElementById('rememberMe').checked = true;
+      }
+    });
+  </script>
+</body>
+</html>

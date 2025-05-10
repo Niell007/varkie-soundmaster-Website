@@ -16,6 +16,7 @@ node_modules
 dist
 dist-ssr
 *.local
+build/
 
 # Cloudflare Workers specific
 .wrangler
@@ -35,8 +36,9 @@ worker
 # Miniflare cache
 .mf/
 
-# Wrangler toml backup files
+# Wrangler files
 wrangler.toml.bak
+.wrangler/
 
 # Editor directories and files
 .vscode/*
@@ -60,3 +62,22 @@ next-env.d.ts
 public/build/
 public/dist/
 .cache/
+
+# Cloudflare Pages specific
+.pages/
+.pages.dev
+
+# Temporary files
+.tmp/
+.temp/
+
+# Local development server
+.dev/
+
+# Secrets and credentials
+.secret
+secrets.json
+
+# Deployment artifacts
+.deployment/
+deployment-*.json

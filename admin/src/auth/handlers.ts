@@ -25,7 +25,7 @@ export async function handleLogin(request: Request): Promise<Response> {
     }
     
     // Query database for user
-    const stmt = env.USERS_DB.prepare('SELECT * FROM users WHERE email = ?');
+    const stmt = env.DB.prepare('SELECT * FROM users WHERE email = ?');
     const result = await stmt.bind(email.toLowerCase()).first<User>();
     
     // Check if user exists
@@ -94,7 +94,7 @@ export async function handleRegister(request: Request): Promise<Response> {
     }
     
     // Check if email is already registered
-    const checkStmt = env.USERS_DB.prepare('SELECT id FROM users WHERE email = ?');
+    const checkStmt = env.DB.prepare('SELECT id FROM users WHERE email = ?');
     const existingUser = await checkStmt.bind(email.toLowerCase()).first<{ id: string }>();
     
     if (existingUser) {
@@ -112,7 +112,7 @@ export async function handleRegister(request: Request): Promise<Response> {
     const now = new Date().toISOString();
     
     // Insert user into database
-    const insertStmt = env.USERS_DB.prepare(
+    const insertStmt = env.DB.prepare(
       'INSERT INTO users (id, email, password, name, role, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?)'
     );
     

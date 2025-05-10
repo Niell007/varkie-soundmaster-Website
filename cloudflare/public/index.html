@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Soundmaster - Online Radio Station for Entertainment">
+    <meta name="theme-color" content="#0055b3">
+    <link rel="manifest" href="/manifest.json">
+    <link rel="apple-touch-icon" href="/images/icon-192x192.png">
+    <title>Soundmaster - Online Radio Station</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link href="css/modern.css" rel="stylesheet" type="text/css">
+    
+    <!-- API Client and Content Loader -->
+    <script src="js/api-client.js" defer></script>
+    <script src="js/content-loader.js" defer></script>
+    
+    <!-- Service Worker Registration -->
+    <script>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('/sw.js')
+            .then(registration => {
+              console.log('ServiceWorker registration successful with scope: ', registration.scope);
+            })
+            .catch(error => {
+              console.error('ServiceWorker registration failed: ', error);
+            });
+        });
+      }
+    </script>
+</head>
+<body>
+<div class="container">
+  <header>
+    <img src="images/logo.jpg" alt="Soundmaster Logo" class="logo" width="244" height="52">
+    
+    <nav class="main-nav">
+      <ul class="nav-list">
+        <li class="nav-item"><a href="index.html" class="nav-link active">Home</a></li>
+        <li class="nav-item"><a href="https://www.virtualdj.com/ask/Soundmaster" class="nav-link">About</a></li>
+        <li class="nav-item"><a href="http://www.virtualdj.com/user/djvarkie/live.html" class="nav-link">Playlist</a></li>
+        <li class="nav-item"><a href="team.html" class="nav-link">Our Team</a></li>
+        <li class="nav-item"><a href="contacts.html" class="nav-link">Contacts</a></li>
+        <li class="nav-item"><a href="on_demand.html" class="nav-link">On-Demand</a></li>
+        <li class="nav-item"><a href="schedule.html" class="nav-link">Schedule</a></li>
+        <li class="nav-item"><a href="playlists.html" class="nav-link">Playlists</a></li>
+        <li class="nav-item"><a href="news.html" class="nav-link">News</a></li>
+      </ul>
+    </nav>
+  </header>
+  
+  <section class="live-stream">
+    <div class="container">
+      <h2><i class="fas fa-broadcast-tower"></i> Live Stream</h2>
+      <div class="audio-player">
+        <audio controls>
+          <source src="#" type="audio/mpeg">
+          Your browser does not support the audio element.
+        </audio>
+        <p class="mt-2">Currently playing: <span id="now-playing">Tune in to Soundmaster Radio</span></p>
+      </div>
+      <iframe width="560" height="315" src="https://www.youtube.com/embed/LIVE_STREAM_ID" allowfullscreen></iframe>
+    </div>
+  </section>
+
+  <main>
+    <div class="container">
+      <div class="content">
+        <div class="main-content">
+          <section class="section" id="welcome">
+            <h2><i class="fas fa-home"></i> Welcome to Soundmaster</h2>
+            <img src="images/img_welcome.jpg" class="section-image" width="126" height="77" alt="Welcome Image" />
+            <p class="headline">New online Radio Station for entertainment reason only</p>
+            <p><strong>Soundmaster is a one man Project for the sole reason to Entertain and not to sell or advertise products by any company. Soundmaster was founded in 2022 for the sole purpose of playing music free of charge and not to advertise any artist in any way above another artist.</strong></p>
+          </section>
+          
+          <section class="section" id="about">
+            <h2><i class="fas fa-info-circle"></i> About Us</h2>
+            <img src="images/img_about.jpg" class="section-image" width="126" height="77" alt="About Image" />
+            <p>Come and enjoy the music and sites of Tzaneen. The main focus of this site is to enjoy the Nature of Limpopo and the sites that Limpopo has to offer. We also want to play the music that the people want to hear. Music that brings back good times, good memories and good feelings while listening to the music on the site. We will have a group that you can put requests on and the song will be added if the song is public friendly.</p>
+          </section>
+        </div>
+        
+        <div class="sidebar">
+          <section class="section" id="news">
+            <h2><i class="fas fa-newspaper"></i> Latest News</h2>
+            <p class="headline">Coming Soon</p>
+            <p>Watch this space for updates and announcements about our programming and special events.</p>
+          </section>
+          
+          <section class="section" id="shows">
+            <h2><i class="fas fa-calendar-alt"></i> Upcoming Shows</h2>
+            <p class="headline">Coming Soon</p>
+            <p>Our program schedule will be posted here. Stay tuned for exciting shows and DJ sets!</p>
+          </section>
+        </div>
+      </div>
+    </div>
+  </main>
+  <footer>
+    <div class="container">
+      <div class="footer-nav">
+        <a href="index.html">HOME</a> | 
+        <a href="#">BOERE MUSIEK</a> | 
+        <a href="https://www.virtualdj.com/ask/Soundmaster">REQUEST SONG</a> | 
+        <a href="http://www.virtualdj.com/user/djvarkie/live.html">LIVE STREAM</a> | 
+        <a href="#">60'S-90'S</a> | 
+        <a href="#">AFRIKAANS</a>
+      </div>
+      <div class="social-links mt-3">
+        <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+        <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+      </div>
+      <p class="copyright mt-3">Copyright © 2025 Soundmaster | Design by Henry van Staden</p>
+      <p class="mt-1">This site is for entertainment only and is a non-profit private hobby</p>
+    </div>
+  </footer>
+</div>
+
+<!-- Bootstrap JS Bundle with Popper -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<!-- Custom JavaScript -->
+<script>
+  // Simple script to handle the "now playing" text
+  document.addEventListener('DOMContentLoaded', function() {
+    const songs = [
+      'Classic Hits from the 80s',
+      'Best of Afrikaans Music',
+      'Boere Musiek Collection',
+      'Top Hits from Limpopo Artists',
+      'Relaxing Nature Sounds from Tzaneen'
+    ];
+    
+    // Update the now playing text every 10 seconds
+    setInterval(function() {
+      const randomSong = songs[Math.floor(Math.random() * songs.length)];
+      document.getElementById('now-playing').textContent = randomSong;
+    }, 10000);
+  });
+</script>
+
+</body>
+</html>
+

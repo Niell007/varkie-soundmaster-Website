@@ -5,12 +5,22 @@ export interface Env {
   /**
    * D1 database binding
    */
-  D1: D1Database;
+  DB: D1Database;
   
   /**
    * R2 storage binding for media files
    */
   R2: R2Bucket;
+  
+  /**
+   * R2 storage binding specifically for media library
+   */
+  MEDIA_BUCKET: R2Bucket;
+  
+  /**
+   * KV namespace for admin assets
+   */
+  ADMIN_ASSETS: KVNamespace;
   
   /**
    * JWT secret for authentication
@@ -174,4 +184,62 @@ interface R2Range {
   offset?: number;
   length?: number;
   suffix?: number;
+}
+
+/**
+ * KV namespace interface
+ */
+interface KVNamespace {
+  get(key: string, options?: KVNamespaceGetOptions): Promise<string | null>;
+  get(key: string, type: 'text', options?: KVNamespaceGetOptions): Promise<string | null>;
+  get<T>(key: string, type: 'json', options?: KVNamespaceGetOptions): Promise<T | null>;
+  get(key: string, type: 'arrayBuffer', options?: KVNamespaceGetOptions): Promise<ArrayBuffer | null>;
+  get(key: string, type: 'stream', options?: KVNamespaceGetOptions): Promise<ReadableStream | null>;
+  put(key: string, value: string | ReadableStream | ArrayBuffer, options?: KVNamespacePutOptions): Promise<void>;
+  delete(key: string): Promise<void>;
+  list(options?: KVNamespaceListOptions): Promise<KVNamespaceListResult>;
+}
+
+/**
+ * KV namespace get options interface
+ */
+interface KVNamespaceGetOptions {
+  type?: 'text' | 'json' | 'arrayBuffer' | 'stream';
+  cacheTtl?: number;
+}
+
+/**
+ * KV namespace put options interface
+ */
+interface KVNamespacePutOptions {
+  expiration?: number;
+  expirationTtl?: number;
+  metadata?: any;
+}
+
+/**
+ * KV namespace list options interface
+ */
+interface KVNamespaceListOptions {
+  prefix?: string;
+  limit?: number;
+  cursor?: string;
+}
+
+/**
+ * KV namespace list result interface
+ */
+interface KVNamespaceListResult {
+  keys: KVNamespaceListKey[];
+  list_complete: boolean;
+  cursor?: string;
+}
+
+/**
+ * KV namespace list key interface
+ */
+interface KVNamespaceListKey {
+  name: string;
+  expiration?: number;
+  metadata?: any;
 }

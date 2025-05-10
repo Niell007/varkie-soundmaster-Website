@@ -60,13 +60,14 @@ export async function updateUserSettings(request: RequestWithParams, env: Env): 
       }
       
       // Verify current password
-      const isPasswordValid = await env.D1.prepare(
+      const isPasswordValid = await env.DB.prepare(
         'SELECT password FROM users WHERE id = ?'
       )
         .bind(user.id)
         .first();
       
-      if (!isPasswordValid || isPasswordValid.password !== updates.currentPassword) {
+      // Type assertion to ensure TypeScript knows isPasswordValid has a password property
+      if (!isPasswordValid || (isPasswordValid as { password: string }).password !== updates.currentPassword) {
         return new Response(JSON.stringify({ message: 'Current password is incorrect' }), {
           status: 400,
           headers: { 'Content-Type': 'application/json' }
@@ -85,7 +86,7 @@ export async function updateUserSettings(request: RequestWithParams, env: Env): 
     
     if (updates.email) {
       // Check if email is already in use
-      const existingUser = await env.D1.prepare(
+      const existingUser = await env.DB.prepare(
         'SELECT id FROM users WHERE email = ? AND id != ?'
       )
         .bind(updates.email, user.id)
@@ -123,10 +124,10 @@ export async function updateUserSettings(request: RequestWithParams, env: Env): 
       WHERE id = ?
     `;
     
-    await env.D1.prepare(updateQuery).bind(...params).run();
+    await env.DB.prepare(updateQuery).bind(...params).run();
     
     // Get updated user
-    const updatedUser = await env.D1.prepare(
+    const updatedUser = await env.DB.prepare(
       'SELECT id, name, email, role FROM users WHERE id = ?'
     )
       .bind(user.id)

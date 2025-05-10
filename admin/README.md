@@ -7,8 +7,10 @@ A comprehensive admin dashboard for the Soundmaster Radio website built with Clo
 - **User Authentication**: Secure login and user management with JWT-based authentication
 - **Content Management**: Create, edit, and publish website content
 - **Media Management**: Upload, organize, and manage media files (audio, images, documents) with advanced search, filtering, and analytics
-- **Schedule Management**: Manage radio show schedules
-- **Playlist Management**: Create and manage music playlists
+- **Schedule Management**: Manage radio show schedules with calendar view
+- **Playlist Management**: Create and manage music playlists with track listings
+- **News Management**: Create, edit, and publish news articles
+- **Website Deployment**: Deploy website content with a single click
 - **User Management**: Add, edit, and remove users with different permission levels
 - **Settings Management**: Configure site-wide and streaming settings
 - **Analytics**: View website traffic and engagement metrics
@@ -146,6 +148,18 @@ See the `migrations/0000_initial_schema.sql` file for the complete database sche
 - `PUT /api/media/:key/metadata`: Update metadata for a media file
 - `DELETE /api/media/:key`: Delete a media file
 - `POST /api/media/:key/signedUrl`: Generate a signed URL for secure access
+
+### News Management
+
+- `GET /api/news`: Get all news articles
+- `POST /api/news`: Create a new news article
+- `GET /api/news/:id`: Get a news article by ID
+- `PUT /api/news/:id`: Update a news article
+- `DELETE /api/news/:id`: Delete a news article
+
+### Website Deployment
+
+- `POST /api/deploy`: Generate and deploy website content
 
 #### Media Features
 

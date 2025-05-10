@@ -1,0 +1,242 @@
+<!-- Schedule Management Section -->
+<div class="content-section">
+  <div class="section-header">
+    <h2><i class="fas fa-calendar-alt"></i> Schedule Management</h2>
+    <p>Create and manage your radio station's broadcast schedule</p>
+  </div>
+
+  <div class="section-actions">
+    <button id="new-schedule-btn" class="btn btn-primary">
+      <i class="fas fa-plus"></i> Add Schedule Item
+    </button>
+  </div>
+
+  <div class="section-content">
+    <div id="schedule-container" class="mt-4">
+      <!-- Schedule calendar will be rendered here -->
+    </div>
+  </div>
+
+  <!-- Schedule Modal -->
+  <div class="modal fade" id="schedule-modal" tabindex="-1" aria-labelledby="scheduleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="scheduleModalLabel">Create New Schedule Item</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-schedule-modal"></button>
+        </div>
+        <div class="modal-body">
+          <form id="schedule-form">
+            <div class="mb-3">
+              <label for="schedule-title" class="form-label">Title</label>
+              <input type="text" class="form-control" id="schedule-title" required>
+              <small class="form-text text-muted">Name of the show or program</small>
+            </div>
+            <div class="mb-3">
+              <label for="schedule-description" class="form-label">Description</label>
+              <textarea class="form-control" id="schedule-description" rows="3" required></textarea>
+              <small class="form-text text-muted">Brief description of the show or program</small>
+            </div>
+            <div class="row mb-3">
+              <div class="col-md-6">
+                <label for="schedule-start-time" class="form-label">Start Time</label>
+                <input type="text" class="form-control" id="schedule-start-time" placeholder="HH:MM" pattern="[0-2][0-9]:[0-5][0-9]" required>
+                <small class="form-text text-muted">24-hour format (e.g., 14:30)</small>
+              </div>
+              <div class="col-md-6">
+                <label for="schedule-end-time" class="form-label">End Time</label>
+                <input type="text" class="form-control" id="schedule-end-time" placeholder="HH:MM" pattern="[0-2][0-9]:[0-5][0-9]" required>
+                <small class="form-text text-muted">24-hour format (e.g., 16:00)</small>
+              </div>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Days</label>
+              <div id="schedule-days" class="d-flex flex-wrap gap-3">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" value="Monday" id="day-monday">
+                  <label class="form-check-label" for="day-monday">Monday</label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" value="Tuesday" id="day-tuesday">
+                  <label class="form-check-label" for="day-tuesday">Tuesday</label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" value="Wednesday" id="day-wednesday">
+                  <label class="form-check-label" for="day-wednesday">Wednesday</label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" value="Thursday" id="day-thursday">
+                  <label class="form-check-label" for="day-thursday">Thursday</label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" value="Friday" id="day-friday">
+                  <label class="form-check-label" for="day-friday">Friday</label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" value="Saturday" id="day-saturday">
+                  <label class="form-check-label" for="day-saturday">Saturday</label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" value="Sunday" id="day-sunday">
+                  <label class="form-check-label" for="day-sunday">Sunday</label>
+                </div>
+              </div>
+              <small class="form-text text-muted">Select all days this show airs</small>
+            </div>
+            <div class="mb-3">
+              <label for="schedule-playlist" class="form-label">Playlist</label>
+              <select class="form-select" id="schedule-playlist">
+                <option value="">Select a playlist (optional)</option>
+                <!-- Playlists will be populated dynamically -->
+              </select>
+              <small class="form-text text-muted">Associate a playlist with this schedule item</small>
+            </div>
+            <div class="mb-3">
+              <label for="schedule-color" class="form-label">Color</label>
+              <input type="color" class="form-control form-control-color" id="schedule-color" value="#3498db">
+              <small class="form-text text-muted">Choose a color for this schedule item</small>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+          <button type="submit" class="btn btn-primary" form="schedule-form" id="save-schedule">Save Schedule Item</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  /* Schedule Calendar Styles */
+  .schedule-calendar {
+    background: white;
+    border-radius: var(--border-radius);
+    padding: 20px;
+    box-shadow: var(--shadow);
+    margin-bottom: 20px;
+  }
+  
+  .calendar-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+  }
+  
+  .calendar-title {
+    font-size: 1.2rem;
+    font-weight: 500;
+  }
+  
+  .calendar-controls {
+    display: flex;
+    gap: 10px;
+  }
+  
+  .calendar-grid {
+    display: flex;
+    overflow-x: auto;
+  }
+  
+  .time-column, .day-column {
+    min-width: 120px;
+    border-right: 1px solid #eee;
+  }
+  
+  .time-column {
+    min-width: 80px;
+  }
+  
+  .time-header, .day-header {
+    padding: 10px;
+    text-align: center;
+    font-weight: 500;
+    background-color: var(--light);
+    border-bottom: 1px solid #eee;
+  }
+  
+  .time-slot, .schedule-slot {
+    height: 60px;
+    padding: 5px;
+    border-bottom: 1px solid #eee;
+    font-size: 0.8rem;
+  }
+  
+  .time-slot {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--gray);
+  }
+  
+  .schedule-slot {
+    cursor: pointer;
+    transition: background-color 0.2s;
+  }
+  
+  .schedule-slot:hover {
+    background-color: #f8f9fa;
+  }
+  
+  .schedule-item {
+    height: 100%;
+    width: 100%;
+    padding: 5px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    overflow: hidden;
+  }
+  
+  .schedule-item:hover {
+    transform: scale(1.02);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  }
+  
+  .item-title {
+    font-weight: 500;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  
+  .item-time {
+    font-size: 0.75rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  
+  .schedule-legend {
+    background: white;
+    border-radius: var(--border-radius);
+    padding: 15px;
+    box-shadow: var(--shadow);
+  }
+  
+  .legend-title {
+    font-weight: 500;
+  }
+  
+  .legend-item {
+    display: flex;
+    align-items: center;
+    padding: 5px 10px;
+    border-radius: 4px;
+  }
+  
+  .legend-color {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    margin-right: 5px;
+  }
+  
+  /* Form Styles */
+  .form-control-color {
+    width: 100%;
+    height: 38px;
+  }
+</style>

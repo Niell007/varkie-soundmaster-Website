@@ -8,6 +8,7 @@ import { login, AdminUser } from "./auth";
 import * as Settings from "./settings";
 import { getDashboardStats, getRecentContent } from './dashboard';
 import { getContent, getContentItem, createContent, updateContent, deleteContent } from './content';
+import { isDatabaseInitialized, initializeDatabase } from './db-init';
 
 /**
  * Authenticate user using Basic Auth or JWT
@@ -630,45 +631,59 @@ async function handleOptions(request: Request): Promise<Response> {
  */
 export default {
   async fetch(request: Request, env: any, ctx: any): Promise<Response> {
-    // Handle CORS preflight requests
-    if (request.method === "OPTIONS") {
-      return handleOptions(request);
-    }
+    try {
+      // Check if database is initialized
+      const dbInitialized = await isDatabaseInitialized(env);
+      
+      // Initialize database if needed
+      if (!dbInitialized) {
+        console.log('Database not initialized, initializing now...');
+        await initializeDatabase(env);
+      }
+      
+      // Handle CORS preflight requests
+      if (request.method === "OPTIONS") {
+        return handleOptions(request);
+      }
+      
+      const url = new URL(request.url);
+      
+      // Handle API requests
+      if (url.pathname.startsWith('/api')) {
+        // API requests are handled by the handleApiRequest function
+        // which includes its own authentication logic
+        return handleApiRequest(request, env);
+      }
     
-    const url = new URL(request.url);
-    
-    // Handle API requests
-    if (url.pathname.startsWith('/api')) {
-      // API requests are handled by the handleApiRequest function
-      // which includes its own authentication logic
-      return handleApiRequest(request, env);
-    }
-    
-    // Special case for login page - no authentication required
-    if (url.pathname === '/login' || url.pathname === '/login.html') {
-      // Serve login page without authentication
+      // Special case for login page - no authentication required
+      if (url.pathname === '/login' || url.pathname === '/login.html') {
+        // Serve login page without authentication
+        return env.ASSETS.fetch(request);
+      }
+      
+      // Special case for static assets needed by login page
+      if (url.pathname.startsWith('/css/') || 
+          url.pathname.startsWith('/js/') || 
+          url.pathname.startsWith('/img/')) {
+        // Serve static assets without authentication
+        return env.ASSETS.fetch(request);
+      }
+      
+      // For all other pages, check if user is authenticated via cookie
+      const token = getCookieValue(request.headers.get('Cookie') || '', 'adminToken');
+      
+      if (!token) {
+        // If no token, redirect to login page
+        return Response.redirect(`${url.origin}/login.html`, 302);
+      }
+      
+      // Serve admin assets from the ASSETS binding
+      // This uses Cloudflare's built-in static asset handling
       return env.ASSETS.fetch(request);
+    } catch (error) {
+      console.error('Error handling request:', error);
+      return new Response('Internal Server Error', { status: 500 });
     }
-    
-    // Special case for static assets needed by login page
-    if (url.pathname.startsWith('/css/') || 
-        url.pathname.startsWith('/js/') || 
-        url.pathname.startsWith('/img/')) {
-      // Serve static assets without authentication
-      return env.ASSETS.fetch(request);
-    }
-    
-    // For all other pages, check if user is authenticated via cookie
-    const token = getCookieValue(request.headers.get('Cookie') || '', 'adminToken');
-    
-    if (!token) {
-      // If no token, redirect to login page
-      return Response.redirect(`${url.origin}/login.html`, 302);
-    }
-    
-    // Serve admin assets from the ASSETS binding
-    // This uses Cloudflare's built-in static asset handling
-    return env.ASSETS.fetch(request);
   }
 };
 

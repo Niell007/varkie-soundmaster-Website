@@ -85,13 +85,13 @@ The initialization script creates two default users:
 
 1. **Admin User**
    - **Username:** admin
-   - **Email:** admin@soundmaster.com
+   - **Email:** admin@soundmaster.co.za
    - **Password:** admin123
    - **Role:** admin
 
 2. **Editor User**
    - **Username:** editor
-   - **Email:** editor@soundmaster.com
+   - **Email:** editor@soundmaster.co.za
    - **Password:** editor123
    - **Role:** editor
 

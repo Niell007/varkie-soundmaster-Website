@@ -1,3 +1,5 @@
+// next.config.mjs - Using ESM format
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   // Configure for Cloudflare Pages
@@ -27,24 +29,28 @@ const nextConfig = {
         net: false,
         tls: false,
         child_process: false,
-        crypto: require.resolve('crypto-browserify'),
-        stream: require.resolve('stream-browserify'),
-        buffer: require.resolve('buffer'),
-        util: require.resolve('util'),
+        crypto: false,
+        stream: false,
+        buffer: false,
+        util: false,
         process: 'process/browser',
         zlib: false,
       };
 
       // Add buffer and process to the providePlugin
-      config.plugins.push(
-        new (require('webpack')).ProvidePlugin({
-          Buffer: ['buffer', 'Buffer'],
-          process: 'process/browser',
-        })
-      );
+      // Use webpack from the webpack context that Next.js provides
+      const { webpack } = config;
+      if (webpack) {
+        config.plugins.push(
+          new webpack.ProvidePlugin({
+            Buffer: ['buffer', 'Buffer'],
+            process: 'process/browser',
+          })
+        );
+      }
     }
     return config;
   },
 };
 
-module.exports = nextConfig;
+export default nextConfig;

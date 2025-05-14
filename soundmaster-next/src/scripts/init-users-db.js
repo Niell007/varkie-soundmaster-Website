@@ -11,7 +11,7 @@ const SALT_ROUNDS = 10;
 const DEFAULT_ADMIN = {
   id: randomUUID(),
   name: 'Admin User',
-  email: 'admin@soundmaster.com',
+  email: 'admin@soundmaster.co.za',
   password: 'admin123', // This will be hashed
   role: 'admin',
   emailVerified: new Date().toISOString()
@@ -22,7 +22,7 @@ const ADDITIONAL_USERS = [
   {
     id: randomUUID(),
     name: 'Editor User',
-    email: 'editor@soundmaster.com',
+    email: 'editor@soundmaster.co.za',
     password: 'editor123', // This will be hashed
     role: 'editor',
     emailVerified: new Date().toISOString()

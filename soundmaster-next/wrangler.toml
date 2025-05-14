@@ -1,0 +1,40 @@
+# Wrangler configuration for Cloudflare Pages deployment
+name = "soundmaster-website"
+compatibility_date = "2025-05-14"
+
+# Main configuration for Pages
+[site]
+bucket = ".next"
+
+# Environment variables
+[vars]
+NEXT_PUBLIC_API_URL = "https://api.soundmaster.co.za"
+
+# Development environment
+[env.development]
+vars = { ENVIRONMENT = "development" }
+
+# Production environment
+[env.production]
+vars = { ENVIRONMENT = "production" }
+
+# Build configuration for Pages
+[build]
+command = "npm run build"
+
+# KV Namespace for storing session data
+[[kv_namespaces]]
+binding = "SESSION_STORE"
+id = "${KV_SESSION_STORE_ID}"
+preview_id = "${KV_SESSION_STORE_PREVIEW_ID}"
+
+# Durable Object for real-time features
+[[durable_objects.bindings]]
+name = "REALTIME"
+class_name = "RealtimeHandler"
+
+# Service bindings for AI integration
+[[services]]
+binding = "AI_SERVICE"
+service = "ai-worker"
+

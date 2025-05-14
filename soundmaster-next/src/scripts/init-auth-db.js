@@ -91,7 +91,7 @@ async function insertUsers() {
   const adminUser = {
     id: randomUUID(),
     name: 'Admin User',
-    email: 'admin@soundmaster.com',
+    email: 'admin@soundmaster.co.za',
     username: 'admin',
     password: await hashPassword('admin123'),
     role: 'admin',
@@ -102,7 +102,7 @@ async function insertUsers() {
   const editorUser = {
     id: randomUUID(),
     name: 'Editor User',
-    email: 'editor@soundmaster.com',
+    email: 'editor@soundmaster.co.za',
     username: 'editor',
     password: await hashPassword('editor123'),
     role: 'editor',

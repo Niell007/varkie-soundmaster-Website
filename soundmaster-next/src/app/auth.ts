@@ -45,7 +45,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             return {
               id: "admin-user-id-1",
               name: "Admin User",
-              email: "admin@soundmaster.com",
+              email: "admin@soundmaster.co.za",
               role: "admin" as UserRole,
             };
           }
@@ -55,7 +55,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             return {
               id: "editor-user-id-1",
               name: "Editor User",
-              email: "editor@soundmaster.com",
+              email: "editor@soundmaster.co.za",
               role: "editor" as UserRole,
             };
           }

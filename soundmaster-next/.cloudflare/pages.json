@@ -1,0 +1,25 @@
+{
+  "build": {
+    "command": "npm run build",
+    "output": ".next",
+    "environment": {
+      "NODE_VERSION": "18"
+    }
+  },
+  "routes": [
+    {
+      "pattern": "/_next/static/*",
+      "headers": {
+        "cache-control": "public, max-age=31536000, immutable"
+      }
+    },
+    {
+      "pattern": "/api/*",
+      "script": "api"
+    },
+    {
+      "pattern": "/*",
+      "script": "index"
+    }
+  ]
+}

@@ -9,6 +9,8 @@ bucket = ".next"
 # Environment variables
 [vars]
 NEXT_PUBLIC_API_URL = "https://api.soundmaster.co.za"
+AUTH_SECRET = "soundmaster-jwt-secret-2025"
+NEXTAUTH_SECRET = "soundmaster-jwt-secret-2025"
 
 # Development environment
 [env.development]
@@ -25,16 +27,22 @@ command = "npm run build"
 # KV Namespace for storing session data
 [[kv_namespaces]]
 binding = "SESSION_STORE"
-id = "${KV_SESSION_STORE_ID}"
-preview_id = "${KV_SESSION_STORE_PREVIEW_ID}"
+id = "28f69e4207df463395ca69c75e2f08b8"
+preview_id = "28f69e4207df463395ca69c75e2f08b8"
 
-# Durable Object for real-time features
-[[durable_objects.bindings]]
-name = "REALTIME"
-class_name = "RealtimeHandler"
+# Comment out Durable Objects until they are properly set up
+# [[durable_objects.bindings]]
+# name = "REALTIME"
+# class_name = "RealtimeHandler"
 
-# Service bindings for AI integration
-[[services]]
-binding = "AI_SERVICE"
-service = "ai-worker"
+# Comment out service bindings until they are properly set up
+# [[services]]
+# binding = "AI_SERVICE"
+# service = "ai-worker"
+
+# D1 Database for karaoke songs
+[[d1_databases]]
+binding = "DB"
+database_name = "soundmaster_db"
+database_id = ""  # Add your D1 database ID after creating it in Cloudflare dashboard
 

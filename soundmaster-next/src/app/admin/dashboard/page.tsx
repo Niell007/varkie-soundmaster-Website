@@ -47,7 +47,9 @@ export default function DashboardPage() {
     if (status === "authenticated") {
       const fetchStats = async () => {
         try {
-          const response = await fetch("/api/dashboard/stats");
+          // Use the environment variable for API URL or fallback to relative path
+          const apiUrl = process.env.NEXT_PUBLIC_API_URL || "";
+          const response = await fetch(`${apiUrl}/api/dashboard/stats`);
 
           if (!response.ok) {
             throw new Error("Failed to fetch stats");

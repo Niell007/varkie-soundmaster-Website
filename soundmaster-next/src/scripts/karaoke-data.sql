@@ -1,0 +1,36 @@
+CREATE TABLE IF NOT EXISTS `karaoke_songs` (
+  `id` INTEGER PRIMARY KEY AUTOINCREMENT,
+  `artist` TEXT DEFAULT NULL,
+  `title` TEXT DEFAULT NULL,
+  `created_at` TEXT DEFAULT CURRENT_TIMESTAMP
+);
+
+INSERT INTO `karaoke_songs` (`artist`, `title`) VALUES
+	('Garbage', '# 1 Crush [SC Karaoke]'),
+	('Chainsmokers', '# S E L F I E [AS Karaoke]'),
+	('Nelly', '#1 [SM Karaoke]'),
+	('Nelly', '#1 [TT Karaoke]'),
+	('Mariah Carey & Miguel', '#Beautiful [BH Karaoke]'),
+	('Chainsmokers', '#Selfie [VS Karaoke]'),
+	('Will.I.Am Feat Justin Bieber', '#Thatpower [BH Karaoke]'),
+	('Will.I.am Feat Justin Bieber', '#Thatpower [SF Karaoke]'),
+	('Jay Z & Beyonce', "'03 Bonnie & Clyde [MM Karaoke]"),
+	('Queen', "'39 [ME Karaoke]"),
+	('Queen', "'39 [RD Karaoke]"),
+	('Amy Winehouse', "'Round Midnight [KV Karaoke]"),
+	('Kenny Chesney', "'Til It's Gone [SBI Karaoke]"),
+	('Justin Moore', "'Til My Last Day [AS Karaoke]"),
+	('Rod Stewart', "'Till There Was You [CB Karaoke]"),
+	('Nelly & Christina Aguilera', "'Tilt Ya Head Back [ME Karaoke]"),
+	('Alan Jackson & Mattie & Ali Jackson Denice', "'Tis So Sweet To Trust In Jesus [CB Karaoke]"),
+	('Everly Brothers', "('Til) I Kissed You [#Z Karaoke]"),
+	('J Geils Band', "(Ain't Nothing But A) House Party [SC Karaoke]"),
+	('Nelson', "(Can't Live Without) Your Love & Affection [CB Karaoke]"),
+	('Nelson', "(Can't Live Without) Your Love & Affection [SC Karaoke]"),
+	('Mike Denver', "(Come Down The Mountain) Katie Daly [KV Karaoke]"),
+	('Barry Blue', "(Dancing) On A Saturday Night [STW Karaoke]"),
+	('Blue Oyster Cult', "(Don't Fear) The Reaper [#Z Karaoke]"),
+	('Blue Oyster Cult', "(Don't Fear) The Reaper [C Karaoke]"),
+	('R.E.M.', "(Don't Go Back To) Rockville [KRG Karaoke]"),
+	('Britney Spears', "(Drop Dead) Beautiful [KV Karaoke]"),
+	('Baby D', "(Everybody's Got To Learn Sometime) I Need Your Loving [SBI Karaoke]");

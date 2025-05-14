@@ -11,6 +11,13 @@ export interface User {
   created_at: string;
 }
 
+export interface KaraokeSong {
+  id: number;
+  artist: string;
+  title: string;
+  created_at: string;
+}
+
 export interface NewsArticle {
   id: number;
   title: string;
@@ -74,6 +81,15 @@ const MOCK_USERS: User[] = [
     role: 'admin',
     created_at: new Date().toISOString()
   }
+];
+
+// Mock karaoke songs data
+const MOCK_KARAOKE_SONGS: KaraokeSong[] = [
+  { id: 1, artist: 'Garbage', title: '# 1 Crush [SC Karaoke]', created_at: new Date().toISOString() },
+  { id: 2, artist: 'Chainsmokers', title: '# S E L F I E [AS Karaoke]', created_at: new Date().toISOString() },
+  { id: 3, artist: 'Nelly', title: '#1 [SM Karaoke]', created_at: new Date().toISOString() },
+  { id: 4, artist: 'Mariah Carey & Miguel', title: '#Beautiful [BH Karaoke]', created_at: new Date().toISOString() },
+  { id: 5, artist: 'Queen', title: "'39 [ME Karaoke]", created_at: new Date().toISOString() }
 ];
 
 const MOCK_NEWS: NewsArticle[] = [
@@ -380,6 +396,100 @@ export class Database {
     return this.executeNonQuery('DELETE FROM team WHERE id = ?', [id]);
   }
 
+  // Karaoke-related methods
+  public async getKaraokeSongs(limit: number = 20, offset: number = 0): Promise<KaraokeSong[]> {
+    if (!this.isProduction) {
+      // Use mock data for development
+      return MOCK_KARAOKE_SONGS.slice(offset, offset + limit);
+    }
+    
+    return this.executeQuery(
+      'SELECT * FROM karaoke_songs ORDER BY artist, title LIMIT ? OFFSET ?',
+      [limit, offset]
+    );
+  }
+
+  public async searchKaraokeSongs(query: string, limit: number = 20, offset: number = 0): Promise<KaraokeSong[]> {
+    if (!this.isProduction) {
+      // Filter mock data for development
+      const lowerQuery = query.toLowerCase();
+      return MOCK_KARAOKE_SONGS
+        .filter(song => 
+          song.artist.toLowerCase().includes(lowerQuery) || 
+          song.title.toLowerCase().includes(lowerQuery)
+        )
+        .slice(offset, offset + limit);
+    }
+    
+    return this.executeQuery(
+      'SELECT * FROM karaoke_songs WHERE artist LIKE ? OR title LIKE ? ORDER BY artist, title LIMIT ? OFFSET ?',
+      [`%${query}%`, `%${query}%`, limit, offset]
+    );
+  }
+
+  public async countKaraokeSongs(query?: string): Promise<number> {
+    if (!this.isProduction) {
+      // Count mock data for development
+      if (query) {
+        const lowerQuery = query.toLowerCase();
+        return MOCK_KARAOKE_SONGS.filter(song => 
+          song.artist.toLowerCase().includes(lowerQuery) || 
+          song.title.toLowerCase().includes(lowerQuery)
+        ).length;
+      }
+      return MOCK_KARAOKE_SONGS.length;
+    }
+    
+    if (query) {
+      const result = await this.executeQuerySingle<{ count: number }>(
+        'SELECT COUNT(*) as count FROM karaoke_songs WHERE artist LIKE ? OR title LIKE ?',
+        [`%${query}%`, `%${query}%`]
+      );
+      return result?.count || 0;
+    }
+    
+    const result = await this.executeQuerySingle<{ count: number }>(
+      'SELECT COUNT(*) as count FROM karaoke_songs'
+    );
+    return result?.count || 0;
+  }
+
+  public async addKaraokeSong(artist: string, title: string): Promise<number> {
+    if (!this.isProduction) {
+      // Add to mock data for development
+      const newId = MOCK_KARAOKE_SONGS.length + 1;
+      MOCK_KARAOKE_SONGS.push({
+        id: newId,
+        artist,
+        title,
+        created_at: new Date().toISOString()
+      });
+      return newId;
+    }
+    
+    return this.executeNonQuery(
+      'INSERT INTO karaoke_songs (artist, title) VALUES (?, ?)',
+      [artist, title]
+    );
+  }
+
+  // Helper methods for counting records
+  private async countNews(): Promise<number> {
+    if (!this.isProduction) {
+      return MOCK_NEWS.length;
+    }
+    const result = await this.executeQuerySingle<{count: number}>('SELECT COUNT(*) as count FROM news');
+    return result?.count || 0;
+  }
+
+  private async countTeamMembers(): Promise<number> {
+    if (!this.isProduction) {
+      return MOCK_TEAM.length;
+    }
+    const result = await this.executeQuerySingle<{count: number}>('SELECT COUNT(*) as count FROM team');
+    return result?.count || 0;
+  }
+
   // Dashboard stats
   public async getDashboardStats(): Promise<{
     newsCount: number;
@@ -387,6 +497,7 @@ export class Database {
     scheduleCount: number;
     playlistCount: number;
     mediaCount: number;
+    karaokeCount: number;
   }> {
     if (!this.isProduction) {
       // Mock data for development
@@ -395,23 +506,29 @@ export class Database {
         teamCount: MOCK_TEAM.length,
         scheduleCount: 5,
         playlistCount: 8,
-        mediaCount: 12
+        mediaCount: 12,
+        karaokeCount: MOCK_KARAOKE_SONGS.length
       };
     }
-
-    // In production, we'd query the database
-    const newsCount = await this.executeQuerySingle<{count: number}>('SELECT COUNT(*) as count FROM news');
-    const teamCount = await this.executeQuerySingle<{count: number}>('SELECT COUNT(*) as count FROM team');
-    const scheduleCount = await this.executeQuerySingle<{count: number}>('SELECT COUNT(*) as count FROM schedule');
-    const playlistCount = await this.executeQuerySingle<{count: number}>('SELECT COUNT(*) as count FROM playlist');
-    const mediaCount = await this.executeQuerySingle<{count: number}>('SELECT COUNT(*) as count FROM media');
-
+    
+    // In production, query the database
+    const newsCount = await this.countNews();
+    const teamCount = await this.countTeamMembers();
+    
+    // Get counts for other tables
+    const scheduleResult = await this.executeQuerySingle<{count: number}>('SELECT COUNT(*) as count FROM schedule');
+    const playlistResult = await this.executeQuerySingle<{count: number}>('SELECT COUNT(*) as count FROM playlists');
+    const mediaResult = await this.executeQuerySingle<{count: number}>('SELECT COUNT(*) as count FROM media');
+    
+    const karaokeCount = await this.countKaraokeSongs();
+    
     return {
-      newsCount: newsCount?.count || 0,
-      teamCount: teamCount?.count || 0,
-      scheduleCount: scheduleCount?.count || 0,
-      playlistCount: playlistCount?.count || 0,
-      mediaCount: mediaCount?.count || 0
+      newsCount,
+      teamCount,
+      scheduleCount: scheduleResult?.count || 0,
+      playlistCount: playlistResult?.count || 0,
+      mediaCount: mediaResult?.count || 0,
+      karaokeCount
     };
   }
 }
